@@ -11,10 +11,13 @@ namespace controleur;
 //if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
 
 require_once __DIR__."/../vue/Login.php";
+use modele\Jeu;
+use vue\Erreur;
 use vue\Login;
 
 require_once __DIR__."/../vue/Erreur.php";
-use vue\Erreur;
+
+require_once __DIR__."/../modele/Jeu.php";
 
 class Routeur {
     /**
@@ -39,7 +42,13 @@ class Routeur {
         if(($pseudo == "a") && ($password == "a")) {
             $userLogged = true;
             session_start($userLogged);
+
+            $this->startGame();
         }
         else Erreur::displayAuthFail();
+    }
+
+    public function startGame() {
+        $jeu = new Jeu();
     }
 }
