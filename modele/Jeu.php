@@ -8,6 +8,9 @@
 
 namespace modele;
 
+require_once __DIR__."/../vue/Erreur.php";
+use vue\Erreur;
+
 require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
@@ -16,7 +19,8 @@ class Jeu {
      * Jeu constructor.
      */
     public function __construct() {
-        $this->initBoard();
+        if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
+        else $this->initBoard();
     }
 
     public function initBoard() {
