@@ -23,6 +23,8 @@ class VJeu {
                 <head>
                     <meta charset="UTF-8">
                     <title>Mastermind de Vincent</title>
+
+                    <script type="text/javascript"></script>
                 </head>
 
                 <body>
