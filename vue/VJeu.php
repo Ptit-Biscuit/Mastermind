@@ -23,10 +23,6 @@ class VJeu {
                 <head>
                     <meta charset="UTF-8">
                     <title>Mastermind de Vincent</title>
-
-                    <script type="text/javascript">
-
-                    </script>
                 </head>
 
                 <body>
@@ -39,7 +35,7 @@ class VJeu {
 
                             for ($j = 0; $j < 4; $j++) {
                                 echo "<td style=\"width: 15%; height: 40px; background-color: darkgrey\">";
-                                echo "<div></div>";
+                                echo "<div id=\"div".$i.$j."\"></div>";
                                 echo "</td> <!-- Une case de la rangee -->";
                             }
 
