@@ -14,6 +14,9 @@ use vue\Erreur;
 require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
+require_once __DIR__."/../vue/VJeuTerminer.php";
+use vue\VJeuTerminer;
+
 require_once __DIR__."/../modele/Plateau.php";
 
 class Jeu {
@@ -64,10 +67,14 @@ class Jeu {
      * Méthode qui valide une rangée du plateau en fonction de la solution
      */
     public function validate() {
-        $test = array("balck", "black", "black", "black");
+        $test = array("black", "black", "black", "black");
 
-        $this->board->getTries()[$this->remainingShots]->setVerif($test);
-        $this->remainingShots--;
+        if($this->remainingShots > 0) {
+            $this->board->getTries()[10 - $this->remainingShots]->setVerif($test);
+            $this->remainingShots--;
+            VJeu::displayGame($this->board);
+        }
+        else VJeuTerminer::gameOver();
     }
 
     /**

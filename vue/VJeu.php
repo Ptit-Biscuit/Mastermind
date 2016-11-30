@@ -83,15 +83,20 @@ class VJeu {
                     <br>
 
                     <?php
-                        echo "<form action=\"index.php\" method=\"post\">";
-                        echo "<input type=\"submit\" name=\"validate\" value=\"Valider\">";
-                        echo "<input type=\"submit\" name=\"retry\" value=\"Recommencer\">";
-                        echo "</form>";
+                        self::actions();
                     ?>
                 </body>
             </html>
             <?php
         }
+    }
+
+    public static function actions() {
+        echo "<form action=\"index.php\" method=\"post\">";
+        echo "<input type=\"submit\" name=\"validate\" value=\"Valider\">";
+        echo "<input type=\"submit\" name=\"retry\" value=\"Recommencer\">";
+        echo "<input type=\"submit\" name=\"quit\" value=\"Quitter\">";
+        echo "</form>";
     }
 
     /**
