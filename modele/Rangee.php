@@ -59,6 +59,8 @@ class Rangee {
      */
     public function setCase($indice, $color) { $this->cases[$indice] = $color; }
 
+    public function setCases($cases) { $this->cases = $cases; }
+
     /**
      * @return array
      */
