@@ -14,17 +14,17 @@ class VJeuTerminer {
      * @param $winOrLose bool True si la partie est gagnée, false sinon
      */
     public static function gameOver($winOrLose) {
-        echo "c'est fini !!";
+        ?>
 
-        if($winOrLose) echo "vous avez gagné la partie    BRAVO";
-        else echo "Dommage vous avez perdu la partie";
+        <?php if($winOrLose) echo "vous avez gagné la partie    BRAVO";
+        else echo "Dommage vous avez perdu la partie"; ?>
 
+        <?php
         VJeu::actions();
     }
 
     public static function endOfGame() {
-        echo "au revoir !!";
-
         if(!empty($_SESSION)) session_destroy();
+        header("Location: index.php");
     }
 }

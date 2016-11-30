@@ -67,25 +67,35 @@ class Jeu {
      * Méthode qui valide une rangée du plateau en fonction de la solution
      */
     public function validate() {
-        if($this->remainingShots > 0) {
+        if($this->remainingShots > 1) {
             $row = $this->board->getTries()[10 - $this->remainingShots]->getCases();
 
             if(!in_array("darkgrey", $row)) {
                 $soluce = $this->board->getSoluce()->getCases();
                 $verif = array();
-                $index = 0;
 
-                for($i = 0; $i < 4; $i++) {
-                    if(in_array($row[$i], $soluce) && ($row[$i] == $soluce[$i])) $verif[$index] = "black";
-                    else if(in_array($row[$i], $soluce)) $verif[$index] = "white";
-                    else $verif[$index] = "darkgrey";
+                for($i = 0; $i < count($soluce); $i++) {
+                    // TODO gérer la validation de plusieurs fois la même couleur
+                    if(in_array($row[$i], $soluce) && ($row[$i] == $soluce[$i])) {
+                        $soluce[$i] = "darkgrey";
+                        $verif[$i] = "black";
+                    }
+                    else if(in_array($row[$i], $soluce) && ($row[$i] != $soluce[$i])) {
 
-                    $index++;
+                        $verif[$i] = "white";
+                    }
+                    else $verif[$i] = "darkgrey";
                 }
 
-                if($verif == "black") VJeuTerminer::gameOver(true);
+                if(($verif[0] == "black") && ($verif[1] == "black")
+                    && ($verif[2] == "black") && ($verif[3] == "black")) {
+                    VJeuTerminer::gameOver(true);
+                    exit;
+                }
                 else {
+                    sort($verif);
                     $this->board->getTries()[10 - $this->remainingShots]->setVerif($verif);
+                    $this->idNextCase = 0;
                     $this->remainingShots--;
                 }
             }
