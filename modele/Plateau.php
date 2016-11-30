@@ -38,7 +38,7 @@ class Plateau {
     /**
      * @return array
      */
-    public function getEssais()
+    public function getTries()
     {
         return $this->essais;
     }

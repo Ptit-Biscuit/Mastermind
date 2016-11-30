@@ -19,6 +19,7 @@ use modele\Bd;
 
 require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
+use vue\VJeu;
 
 class Routeur {
     /**
@@ -40,6 +41,7 @@ class Routeur {
         if(!isset($_SESSION['userLogged'])) { // si on n'est pas enregistré
             if(isset($_POST['pseudo']) && isset($_POST['password'])) // si on a le pseudo et mdp
                 $this->authentification($_POST['pseudo'], $_POST['password']); // authentification
+            else if(isset($_POST['retry'])) $this->startGame();
             else Login::displayLogin(); // sinon afficher page de log
         }
         else $this->contGame(); // sinon on continue le jeu
@@ -48,6 +50,8 @@ class Routeur {
     public function authentification($pseudo, $password) {
         if($this->bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
+            $_SESSION['pseudo'] = $pseudo;
+
             $this->startGame();
         }
         else Erreur::displayAuthFail();
@@ -56,6 +60,10 @@ class Routeur {
     public function startGame() { $_SESSION['jeu'] = new Jeu(); }
 
     public function contGame() {
-        if(isset($_SESSION['jeu']) && isset($_GET['color'])) $_SESSION['jeu']->updateBoard($_GET['color']);
+        if(isset($_SESSION['jeu']) && isset($_GET['color'])) {
+            $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");
+            if(in_array($_GET['color'], $colors)) $_SESSION['jeu']->updateBoard($_GET['color']);
+            else VJeu::displayGame($_SESSION['jeu']->getBoard());
+        }
     }
 }

@@ -32,7 +32,7 @@ class VJeu {
                 </head>
 
                 <body>
-                    <h2>Bienvenue <?php if(isset($_POST['pseudo'])) echo $_POST['pseudo']; ?></h2>
+                    <h2>Bienvenue <?php if(isset($_SESSION['pseudo'])) echo $_SESSION['pseudo']; ?></h2>
 
                     <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
                         <?php
@@ -41,7 +41,7 @@ class VJeu {
 
                             for($j = 0; $j < 4; $j++) {
                                 echo "<td style=\"width: 15%; height: 40px; background-color:";
-                                echo $plateau->getEssais()[$i]->getCases()[$j].";\">"; // itération des cases
+                                echo $plateau->getTries()[$i]->getCases()[$j].";\">"; // itération des cases
                                 echo "<div id=\"div".$i.$j."\"></div>";
                                 echo "</td> <!-- Une case de la rangee -->";
                             }
@@ -52,7 +52,7 @@ class VJeu {
 
                             for($k = 0; $k < 4; $k++) {
                                 echo "<td style=\"height: 40px; background-color:";
-                                echo $plateau->getEssais()[$i]->getVerif()[$k].";\">"; // itération des vérif'
+                                echo $plateau->getTries()[$i]->getVerif()[$k].";\">"; // itération des vérif'
                                 echo "<a href='index.php'></a>";
                                 echo "</td> <!-- Une vérification -->";
                             }
@@ -69,7 +69,7 @@ class VJeu {
                     <table style="width: 70%; border: 2px solid black;"> <!-- Plateau des couleurs possibles -->
                         <tr>
                             <?php
-                                $colors = array("blue", "fuchsia", "green", "purple", "orange", "red", "yellow");
+                                $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");
 
                                 foreach($colors as $color) {
                                     echo "<td style=\"width: 10%; height: 30px; background-color:".$color."\">";
@@ -79,9 +79,31 @@ class VJeu {
                             ?>
                         </tr>
                     </table>
+
+                    <br>
+
+                    <?php
+                        echo "<form action=\"index.php\" method=\"post\">";
+                        echo "<input type=\"button\" name=\"validate\" value=\"Valider\">";
+                        echo "<input type=\"button\" name=\"retry\" value=\"Recommencer\">";
+                        echo "</form>";
+                    ?>
                 </body>
             </html>
             <?php
         }
+    }
+
+    public static function displayMustValidate() {
+        ?>
+        <!DOCTYPE html>
+        <html lang="fr">
+            <script type="text/javascript">
+                function warning() { alert("Vous devez absolument valider avant de continuer"); }
+            </script>
+
+            <body onload="warning()"></body>
+        </html>
+        <?php
     }
 }

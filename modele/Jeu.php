@@ -20,7 +20,17 @@ class Jeu {
     /**
      * @var Plateau Le plateau du jeu
      */
-    private $plateau;
+    private $board;
+
+    /**
+     * @var int Le nombre de coups restants à jouer
+     */
+    private $remainingShots;
+
+    /**
+     * @var int L'indice de la prochaine case à colorer
+     */
+    private $i;
 
     /**
      * Jeu constructor.
@@ -28,9 +38,11 @@ class Jeu {
     public function __construct() {
         if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
         else {
-            $this->plateau = new Plateau();
+            $this->board = new Plateau();
+            $this->remainingShots = 10;
+            $this->i = 0;
 
-            VJeu::displayGame($this->plateau);
+            VJeu::displayGame($this->board);
         }
     }
 
@@ -39,7 +51,18 @@ class Jeu {
      * @param $color String La couleur à ajouter
      */
     public function updateBoard($color) {
-        $this->plateau->getEssais()[0]->setCase(0, $color);
-        VJeu::displayGame($this->plateau);
+        if($this->i < 4) {
+            $this->board->getTries()[10 - $this->remainingShots]->setCase($this->i, $color);
+            $this->i++;
+        }
+        else VJeu::displayMustValidate();
+
+        VJeu::displayGame($this->board);
     }
+
+    /**
+     * Getter de plateau
+     * @return Plateau Le plateau du jeu
+     */
+    public function getBoard() { return $this->board; }
 }

@@ -39,11 +39,11 @@ class Rangee {
      * une couleur au hasard parmi celles du jeu
      */
     public function initSoluce() {
-        $casesSoluce = array();
+        $soluceCases = array();
 
-        for($i = 0; $i < 4; $i++) array_push($casesSoluce, $this->colors[rand(0, 7)]);
+        for($i = 0; $i < 4; $i++) array_push($soluceCases, $this->colors[rand(0, 7)]);
 
-        $this->setCases($casesSoluce);
+        $this->setCases($soluceCases);
 
         echo "Solution - ".$this->cases[0]." ".$this->cases[1]." ".$this->cases[2]." ".$this->cases[3];
     }
@@ -54,10 +54,10 @@ class Rangee {
     public function getCases() { return $this->cases; }
 
     /**
-     * @param $indice int L'indice de la case
-     * @param $color La couleur à mettre pour la case
+     * @param $index int L'indice de la case
+     * @param $color String La couleur à mettre pour la case
      */
-    public function setCase($indice, $color) { $this->cases[$indice] = $color; }
+    public function setCase($index, $color) { $this->cases[$index] = $color; }
 
     public function setCases($cases) { $this->cases = $cases; }
 
