@@ -44,8 +44,6 @@ class Rangee {
         for($i = 0; $i < 4; $i++) array_push($soluceCases, $this->colors[rand(0, 7)]);
 
         $this->setCases($soluceCases);
-
-        echo "Solution - ".$this->cases[0]." ".$this->cases[1]." ".$this->cases[2]." ".$this->cases[3];
     }
 
     /**
