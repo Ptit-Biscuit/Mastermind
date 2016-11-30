@@ -27,11 +27,6 @@ class Routeur {
     private $bd;
 
     /**
-     * @var Jeu Le jeu en cours
-     */
-    private $jeu;
-
-    /**
      * Routeur constructor.
      */
     public function __construct()
@@ -58,11 +53,9 @@ class Routeur {
         else Erreur::displayAuthFail();
     }
 
-    public function startGame() {
-        $this->jeu = new Jeu();
-    }
+    public function startGame() { $_SESSION['jeu'] = new Jeu(); }
 
     public function contGame() {
-        if(isset($_GET['color'])) $this->jeu->updateBoard($_GET['color']);
+        if(isset($_SESSION['jeu']) && isset($_GET['color'])) $_SESSION['jeu']->updateBoard($_GET['color']);
     }
 }
