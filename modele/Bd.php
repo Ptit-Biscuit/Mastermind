@@ -59,7 +59,7 @@ class Bd {
      * Méthode qui permet de fermer la connexion à la base de données
      */
     public function disconnect() {
-        if(!empty($_SESSION)) session_abort();
+        if(!empty($_SESSION)) session_destroy();
         $this->connexion = null;
     }
 }

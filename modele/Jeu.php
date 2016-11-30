@@ -67,14 +67,32 @@ class Jeu {
      * Méthode qui valide une rangée du plateau en fonction de la solution
      */
     public function validate() {
-        $test = array("black", "black", "black", "black");
-
         if($this->remainingShots > 0) {
-            $this->board->getTries()[10 - $this->remainingShots]->setVerif($test);
-            $this->remainingShots--;
+            $row = $this->board->getTries()[10 - $this->remainingShots]->getCases();
+
+            if(!in_array("darkgrey", $row)) {
+                $soluce = $this->board->getSoluce()->getCases();
+                $verif = array();
+                $index = 0;
+
+                for($i = 0; $i < 4; $i++) {
+                    if(in_array($row[$i], $soluce) && ($row[$i] == $soluce[$i])) $verif[$index] = "black";
+                    else if(in_array($row[$i], $soluce)) $verif[$index] = "white";
+                    else $verif[$index] = "darkgrey";
+
+                    $index++;
+                }
+
+                if($verif == "black") VJeuTerminer::gameOver(true);
+                else {
+                    $this->board->getTries()[10 - $this->remainingShots]->setVerif($verif);
+                    $this->remainingShots--;
+                }
+            }
+
             VJeu::displayGame($this->board);
         }
-        else VJeuTerminer::gameOver();
+        else VJeuTerminer::gameOver(false);
     }
 
     /**

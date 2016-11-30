@@ -42,7 +42,7 @@ class VJeu {
                             for($j = 0; $j < 4; $j++) {
                                 echo "<td style=\"width: 15%; height: 40px; background-color:";
                                 echo $plateau->getTries()[$i]->getCases()[$j].";\">"; // itération des cases
-                                echo "<div id=\"div".$i.$j."\"></div>";
+                                echo "<div></div>";
                                 echo "</td> <!-- Une case de la rangee -->";
                             }
 
@@ -66,7 +66,7 @@ class VJeu {
 
                     <br>
 
-                    <table style="width: 70%; border: 2px solid black;"> <!-- Plateau des couleurs possibles -->
+                    <table style="width: 80%; border: 2px solid black;"> <!-- Plateau des couleurs possibles -->
                         <tr>
                             <?php
                                 $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");
@@ -85,6 +85,18 @@ class VJeu {
                     <?php
                         self::actions();
                     ?>
+
+                    <br>
+
+                    <p>affiche la solution pour verifier pendant les tests</p>
+
+                    <table style="width: 60%; border: 2px solid black;"> <!-- Plateau de la soluce -->
+                        <?php
+                        for($i = 0; $i < 4; $i++)
+                            echo "<td style=\"width: 15%; height: 25px; background-color: ".$plateau->getSoluce()->getCases()[$i].";\">";
+                            echo "<div></div></td>";
+                        ?>
+                    </table>
                 </body>
             </html>
             <?php
