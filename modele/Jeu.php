@@ -14,16 +14,31 @@ use vue\Erreur;
 require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
+require_once __DIR__."/../modele/Plateau.php";
+
 class Jeu {
+    /**
+     * @var Plateau Le plateau du jeu
+     */
+    private $plateau;
+
     /**
      * Jeu constructor.
      */
     public function __construct() {
         if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
-        else $this->initBoard();
+        else {
+            $this->plateau = new Plateau();
+
+            VJeu::displayGame($this->plateau);
+        }
     }
 
-    public function initBoard() {
-        $vueJeu = new VJeu();
+    /**
+     * Actualise la vue du jeu
+     * @param $color String La couleur à ajouter
+     */
+    public function updateBoard($color) {
+        $this->plateau->getEssais();
     }
 }

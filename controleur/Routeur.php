@@ -21,39 +21,48 @@ require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
 
 class Routeur {
+    /**
+     * @var Bd La base de données utilisée
+     */
     private $bd;
+
+    /**
+     * @var Jeu Le jeu en cours
+     */
+    private $jeu;
 
     /**
      * Routeur constructor.
      */
     public function __construct()
     {
-        //if(!isset($_SESSION['userLogged'])) Login::displayLogin();
         session_start();
         $this->bd = new Bd();
         $this->routeRequest();
     }
 
     public function routeRequest() {
-        if(isset($_POST['pseudo']) && isset($_POST['password'])) {
-            $pseudo = $_POST['pseudo'];
-            $password = $_POST['password'];
-
-            $this->authentification($pseudo, $password);
+        if(!isset($_SESSION['userLogged'])) { // si on n'est pas enregistré
+            if(isset($_POST['pseudo']) && isset($_POST['password'])) // si on a le pseudo et mdp
+                $this->authentification($_POST['pseudo'], $_POST['password']); // authentification
+            else Login::displayLogin(); // sinon afficher page de log
         }
-        else Login::displayLogin();
+        else $this->contGame(); // sinon on continue le jeu
     }
 
     public function authentification($pseudo, $password) {
         if($this->bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
-
             $this->startGame();
         }
         else Erreur::displayAuthFail();
     }
 
     public function startGame() {
-        $jeu = new Jeu();
+        $this->jeu = new Jeu();
+    }
+
+    public function contGame() {
+        if(isset($_GET['color'])) $this->jeu->updateBoard($_GET['color']);
     }
 }
