@@ -39,6 +39,6 @@ class Jeu {
      * @param $color String La couleur à ajouter
      */
     public function updateBoard($color) {
-        $this->plateau->getEssais()[0]->getCase(0, $color);
+        VJeu::displayGame($this->plateau->getEssais()[0]->setCase(0, $color));
     }
 }
