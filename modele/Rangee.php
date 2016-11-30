@@ -51,32 +51,21 @@ class Rangee {
     /**
      * @return array
      */
-    public function getCases()
-    {
-        return $this->cases;
-    }
+    public function getCases() { return $this->cases; }
 
     /**
-     * @param array
+     * @param $indice int L'indice de la case
+     * @param $color La couleur à mettre pour la case
      */
-    public function setCases($cases)
-    {
-        $this->cases = $cases;
-    }
+    public function setCase($indice, $color) { $this->cases[$indice] = $color; }
 
     /**
      * @return array
      */
-    public function getVerif()
-    {
-        return $this->verif;
-    }
+    public function getVerif() { return $this->verif; }
 
     /**
      * @param array
      */
-    public function setVerif($verif)
-    {
-        $this->verif = $verif;
-    }
+    public function setVerif($verif) { $this->verif = $verif; }
 }

@@ -39,6 +39,6 @@ class Jeu {
      * @param $color String La couleur à ajouter
      */
     public function updateBoard($color) {
-        $this->plateau->getEssais();
+        $this->plateau->getEssais()[0]->getCases()[0]->setCase;
     }
 }
