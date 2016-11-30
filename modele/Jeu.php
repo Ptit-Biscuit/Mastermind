@@ -30,7 +30,7 @@ class Jeu {
     /**
      * @var int L'indice de la prochaine case à colorer
      */
-    private $i;
+    private $idNextCase;
 
     /**
      * Le constructeur de Jeu
@@ -40,7 +40,7 @@ class Jeu {
         else {
             $this->board = new Plateau();
             $this->remainingShots = 10;
-            $this->i = 0;
+            $this->idNextCase = 0;
 
             VJeu::displayGame($this->board);
         }
@@ -51,13 +51,23 @@ class Jeu {
      * @param $color String La couleur à ajouter
      */
     public function updateBoard($color) {
-        if($this->i < 4) {
-            $this->board->getTries()[10 - $this->remainingShots]->setCase($this->i, $color);
-            $this->i++;
+        if($this->idNextCase < 4) {
+            $this->board->getTries()[10 - $this->remainingShots]->setCase($this->idNextCase, $color);
+            $this->idNextCase++;
         }
         else VJeu::displayMustValidate();
 
         VJeu::displayGame($this->board);
+    }
+
+    /**
+     * Méthode qui valide une rangée du plateau en fonction de la solution
+     */
+    public function validate() {
+        $test = array("balck", "black", "black", "black");
+
+        $this->board->getTries()[$this->remainingShots]->setVerif($test);
+        $this->remainingShots--;
     }
 
     /**

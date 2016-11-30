@@ -47,7 +47,7 @@ class Routeur {
         }
         else {
             if(isset($_POST['retry'])) $this->startGame(); // si on veut recommencer le jeu
-            else if(isset($_POST['validate'])) echo "validation - "; // si on veut valider notre coup
+            else if(isset($_POST['validate'])) $_SESSION['jeu']->validate(); // si on veut valider notre coup
             else $this->contGame(); // sinon on continue le jeu
         }
     }
