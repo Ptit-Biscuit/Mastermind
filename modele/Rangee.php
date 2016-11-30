@@ -26,7 +26,7 @@ class Rangee {
     private $colors;
 
     /**
-     * Rangee constructor.
+     * Le constructeur de Rangee
      */
     public function __construct() {
         $this->cases = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
@@ -35,7 +35,7 @@ class Rangee {
     }
 
     /**
-     * Initialise les cases de la rangée solution en tirant
+     * Méthode qu initialise les cases de la rangée solution en tirant
      * une couleur au hasard parmi celles du jeu
      */
     public function initSoluce() {
@@ -49,25 +49,33 @@ class Rangee {
     }
 
     /**
-     * @return array
+     * Getter des cases de la rangée
+     * @return array Les cases de la rangée
      */
     public function getCases() { return $this->cases; }
 
     /**
+     * Setter d'une case de la rangée
      * @param $index int L'indice de la case
      * @param $color String La couleur à mettre pour la case
      */
     public function setCase($index, $color) { $this->cases[$index] = $color; }
 
+    /**
+     * Setter des cases de la rangée
+     * @param $cases array Les nouvelles cases de la rangée
+     */
     public function setCases($cases) { $this->cases = $cases; }
 
     /**
-     * @return array
+     * Getter de la vérification de la rangée
+     * @return array La vérification de la rangée
      */
     public function getVerif() { return $this->verif; }
 
     /**
-     * @param array
+     * Setter de la vérification de la rangée
+     * @param $verif array La nouvelle vérification de la rangée
      */
     public function setVerif($verif) { $this->verif = $verif; }
 }

@@ -15,7 +15,7 @@ use modele\Plateau;
 
 class VJeu {
     /**
-     * Affiche le jeu en paramètre
+     * Méthode qui affiche le plateau passé en paramètre
      * @param $plateau Plateau Le plateau à afficher
      */
     public static function displayGame($plateau) {
@@ -84,8 +84,8 @@ class VJeu {
 
                     <?php
                         echo "<form action=\"index.php\" method=\"post\">";
-                        echo "<input type=\"button\" name=\"validate\" value=\"Valider\">";
-                        echo "<input type=\"button\" name=\"retry\" value=\"Recommencer\">";
+                        echo "<input type=\"submit\" name=\"validate\" value=\"Valider\">";
+                        echo "<input type=\"submit\" name=\"retry\" value=\"Recommencer\">";
                         echo "</form>";
                     ?>
                 </body>
@@ -94,6 +94,10 @@ class VJeu {
         }
     }
 
+    /**
+     * Méthode qui affiche un message à l'utilisateur suite à une manipulation
+     * incorrecte lors de la partie (utilise du javascript)
+     */
     public static function displayMustValidate() {
         ?>
         <!DOCTYPE html>

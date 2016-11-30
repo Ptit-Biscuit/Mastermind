@@ -28,25 +28,36 @@ class Routeur {
     private $bd;
 
     /**
-     * Routeur constructor.
+     * Le constructeur de Routeur
      */
-    public function __construct()
-    {
-        session_start();
+    public function __construct() {
+        if(empty($_SESSION)) session_start();
         $this->bd = new Bd();
         $this->routeRequest();
     }
 
+    /**
+     * Méthode routant toutes les requêtes entrantes de la page index.php
+     */
     public function routeRequest() {
-        if(!isset($_SESSION['userLogged'])) { // si on n'est pas enregistré
-            if(isset($_POST['pseudo']) && isset($_POST['password'])) // si on a le pseudo et mdp
+        if(!isset($_SESSION['userLogged'])) { // si pas enregistré
+            if(isset($_POST['pseudo']) && isset($_POST['password'])) // si le pseudo et mdp dispo
                 $this->authentification($_POST['pseudo'], $_POST['password']); // authentification
-            else if(isset($_POST['retry'])) $this->startGame();
             else Login::displayLogin(); // sinon afficher page de log
         }
-        else $this->contGame(); // sinon on continue le jeu
+        else {
+            if(isset($_POST['retry'])) $this->startGame(); // si on veut recommencer le jeu
+            else if(isset($_POST['validate'])) echo "validation - "; // si on veut valider notre coup
+            else $this->contGame(); // sinon on continue le jeu
+        }
     }
 
+    /**
+     * Méthode qui authentifie un utilisateur par son pseudo et son mot de passe
+     * On utilise la base de données pour l'authentifier
+     * @param $pseudo String Le pseudo du joueur
+     * @param $password String Le mot de passe du joueur
+     */
     public function authentification($pseudo, $password) {
         if($this->bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
@@ -57,8 +68,14 @@ class Routeur {
         else Erreur::displayAuthFail();
     }
 
+    /**
+     * Méthode qui commence une nouvelle partie
+     */
     public function startGame() { $_SESSION['jeu'] = new Jeu(); }
 
+    /**
+     * Méthode qui continue une partie en cours
+     */
     public function contGame() {
         if(isset($_SESSION['jeu']) && isset($_GET['color'])) {
             $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");

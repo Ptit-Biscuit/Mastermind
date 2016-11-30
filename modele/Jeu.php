@@ -33,7 +33,7 @@ class Jeu {
     private $i;
 
     /**
-     * Jeu constructor.
+     * Le constructeur de Jeu
      */
     public function __construct() {
         if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
@@ -47,7 +47,7 @@ class Jeu {
     }
 
     /**
-     * Actualise la vue du jeu
+     * Méthode qui actualise la vue du jeu
      * @param $color String La couleur à ajouter
      */
     public function updateBoard($color) {

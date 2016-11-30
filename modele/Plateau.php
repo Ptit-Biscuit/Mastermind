@@ -22,10 +22,9 @@ class Plateau {
     private $soluce;
 
     /**
-     * Plateau constructor.
+     * Le construcyeur de Plateau
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->essais = array(new Rangee(), new Rangee(), new Rangee(),
             new Rangee(), new Rangee(), new Rangee(),
             new Rangee(), new Rangee(), new Rangee(),
@@ -36,18 +35,14 @@ class Plateau {
     }
 
     /**
-     * @return array
+     * Getter des essais du plateau
+     * @return array Les essais
      */
-    public function getTries()
-    {
-        return $this->essais;
-    }
+    public function getTries() { return $this->essais; }
 
     /**
-     * @return Rangee
+     * Getter de la solution du plateau
+     * @return Rangee La solution
      */
-    public function getSoluce()
-    {
-        return $this->soluce;
-    }
+    public function getSoluce() { return $this->soluce; }
 }

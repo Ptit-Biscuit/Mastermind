@@ -16,10 +16,9 @@ class Bd {
     private $connexion;
 
     /**
-     * BD constructor.
+     * Le constructeur de Bd
      */
-    public function __construct()
-    {
+    public function __construct() {
         try {
             /*$chaine="mysql:host=localhost;dbname=E155939Z";
             $this->connexion = new PDO($chaine,"E155939Z","E155939Z");*/
@@ -33,14 +32,13 @@ class Bd {
     }
 
     /**
-     * Vérifie si un couple d'identifiants est valide
+     * Méthode qui vérifie si un couple d'identifiants est valide
      * @param $id String pseudo du joueur
      * @param $password String mot de passe supposément associé
      * @return bool true si le couple (pseudo, mot de passe) est valide, false sinon
      * @throws PDOException s'il y a eu un problème vis-à-vis de la base de données
      */
-    public function isPlayerRegistered($id, $password)
-    {
+    public function isPlayerRegistered($id, $password) {
         try {
             $stmt = $this->connexion->prepare("SELECT motDePasse FROM joueurs WHERE pseudo=?;");
             $stmt->bindParam(1, $id);
@@ -58,10 +56,10 @@ class Bd {
     }
 
     /**
-     * Permet de fermer la connexion à la base de données
+     * Méthode qui permet de fermer la connexion à la base de données
      */
-    public function disconnect()
-    {
+    public function disconnect() {
+        if(!empty($_SESSION)) session_abort();
         $this->connexion = null;
     }
 }
