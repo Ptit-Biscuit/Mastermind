@@ -8,6 +8,8 @@
 
 namespace modele;
 
+require_once __DIR__."/../modele/Rangee.php";
+
 class Plateau {
     /**
      * @var array Les essais
