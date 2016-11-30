@@ -52,7 +52,7 @@ class VJeu {
 
                             for($k = 0; $k < 4; $k++) {
                                 echo "<td style=\"height: 40px; background-color:";
-                                echo $plateau->getEssais()[$i]->getVerif()[$j].";\">"; // itération des vérif'
+                                echo $plateau->getEssais()[$i]->getVerif()[$k].";\">"; // itération des vérif'
                                 echo "<a href='index.php'></a>";
                                 echo "</td> <!-- Une vérification -->";
                             }
