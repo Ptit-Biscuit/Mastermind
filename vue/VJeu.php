@@ -36,18 +36,18 @@ class VJeu {
                             echo "<tr> <!-- Une rangee du plateau -->";
 
                             for ($j = 0; $j < 4; $j++) {
-                                echo "<td style=\"width: 15%; height: 40px; background-color: darkgrey\">";
+                                echo "<td style=\"width: 15%; height: 40px; background-color: darkgrey;\">";
                                 echo "<div id=\"div".$i.$j."\"></div>";
                                 echo "</td> <!-- Une case de la rangee -->";
                             }
 
-                            echo "<td style=\"width: 15%; border: 2px solid black; background-color: darkgrey\">";
+                            echo "<td style=\"width: 15%; border: 2px solid black;\">";
                             echo "<table style=\"width: 100%;\">";
                             echo "<tr style=\"height: 49%;\"> <!-- La case des vérif' -->";
 
                             for ($k = 0; $k < 4; $k++) {
-                                echo "<td style=\"height: 40px;\">";
-                                echo "<div></div>";
+                                echo "<td style=\"height: 40px; background-color: darkgrey;\">";
+                                echo "<a href='index.php'></a>";
                                 echo "</td> <!-- Une vérification -->";
                             }
 
@@ -60,42 +60,22 @@ class VJeu {
 
                     <br>
 
-                    <table style="width: 64%; border: 2px solid black;"> <!-- Plateau des couleurs possibles -->
-                        <tr>
-                            <td style="width: 12%; height: 30px; background-color: yellow">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 12%; height: 30px; background-color: orange">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 12%; height: 30px; background-color: red">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 12%; height: 30px; background-color: fuchsia">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 12%; height: 30px; background-color: purple">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 12%; height: 30px; background-color: blue">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 12%; height: 30px; background-color: green">
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <br>
-
                     <form action="index.php" method="post">
-                        <input type="submit" name="Valider" value="Valider le coup">
+                        <table style="width: 70%; border: 2px solid black;"> <!-- Plateau des couleurs possibles -->
+                            <tr>
+                                <?php
+                                    $colors = array("blue", "fuchsia", "green", "purple", "orange", "red", "yellow");
+
+                                    foreach($colors as $color) {
+                                        echo "<td style = \"width: 10%; height: 30px; background-color: ".$color."\">";
+                                        echo "<a href='index.php'></a>";
+                                        echo "</td>";
+                                    }
+                                ?>
+                            </tr>
+                        </table>
+
+                        <input type="submit" value="Valider le coup">
                     </form>
                 </body>
             </html>

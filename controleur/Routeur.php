@@ -14,10 +14,15 @@ use vue\Login;
 require_once __DIR__."/../vue/Erreur.php";
 use vue\Erreur;
 
+require_once __DIR__."/../modele/Bd.php";
+use modele\Bd;
+
 require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
 
 class Routeur {
+    private $bd;
+
     /**
      * Routeur constructor.
      */
@@ -25,6 +30,7 @@ class Routeur {
     {
         //if(!isset($_SESSION['userLogged'])) Login::displayLogin();
         session_start();
+        $this->bd = new Bd();
         $this->routeRequest();
     }
 
@@ -39,7 +45,7 @@ class Routeur {
     }
 
     public function authentification($pseudo, $password) {
-        if(($pseudo == "a") && ($password == "a")) {
+        if($this->bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
 
             $this->startGame();
