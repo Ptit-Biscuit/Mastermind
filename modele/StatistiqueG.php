@@ -6,15 +6,14 @@
 
 namespace modele;
 
-class StatistiqueG
-{
+class StatistiqueG {
 
     private $pseudo;
     private $partieGagnee;
     private $nombreCoups;
 
     /**
-     * Statistique constructor.
+     * Le constructeur de StatistiqueG (stats des parties)
      * @param $pseudo String le pseudo du joueur
      * @param $partieGagnee bool true si la partie a été gagnée, false sinon
      * @param $nombreCoups int nombre de coups joués lors de cette partie

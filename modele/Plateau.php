@@ -25,7 +25,7 @@ class Plateau {
     public function __construct() {
     	for($i = 0; $i < 10; $i++) $this->essais[] = new Rangee();
         $this->soluce = new Rangee();
-        $this->soluce->initSoluce();
+        $this->soluce->initSoluce(array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue"));
     }
 
     /**

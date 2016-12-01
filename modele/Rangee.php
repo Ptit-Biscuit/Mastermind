@@ -18,24 +18,19 @@ class Rangee {
     private $verif;
 
     /**
-     * @var array Les couleurs possibles
-     */
-    private $colors;
-
-    /**
      * Le constructeur de Rangee
      */
     public function __construct() {
         $this->cases = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
         $this->verif = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
-        $this->colors = array("red", "yellow", "green", "blue", "orange", "white", "purple", "fuchsia");
     }
 
     /**
      * Méthode qu initialise les cases de la rangée solution en tirant
      * une couleur au hasard parmi celles du jeu
+     * @param $colors array Les couleurs possibles
      */
-    public function initSoluce() {
+    public function initSoluce($colors) {
         $soluceCases = array();
 
         for($i = 0; $i < 4; $i++) array_push($soluceCases, $this->colors[rand(0, 7)]);
