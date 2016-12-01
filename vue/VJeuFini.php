@@ -27,11 +27,16 @@ class VJeuFini {
         </html>
         <?php
 
-        if(!empty($_SESSION)) session_destroy();
         if(!empty($_COOKIE)) unset($_COOKIE);
 
         VJeu::actionsEndGame();
     }
 
-    public static function endOfGame() { header("Location: index.php"); }
+    public static function endOfGame() {
+        if(!empty($_SESSION)) {
+            session_destroy();
+            session_abort();
+        }
+        header("Location: index.php");
+    }
 }
