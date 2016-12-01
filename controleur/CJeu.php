@@ -6,13 +6,13 @@
 
 namespace controleur;
 
-require_once __DIR__."../vue/VJeu.php";
+require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
-require_once __DIR__."../vue/VJeuTerminer.php";
+require_once __DIR__."/../vue/VJeuTerminer.php";
 use vue\VJeuTerminer;
 
-require_once __DIR__."../modele/Jeu.php";
+require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
 
 class CJeu {
