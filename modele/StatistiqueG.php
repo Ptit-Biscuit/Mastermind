@@ -18,8 +18,7 @@ class StatistiqueG {
      * @param $partieGagnee bool true si la partie a été gagnée, false sinon
      * @param $nombreCoups int nombre de coups joués lors de cette partie
      */
-    public function __construct($pseudo, $partieGagnee, $nombreCoups)
-    {
+    public function __construct($pseudo, $partieGagnee, $nombreCoups) {
         $this->pseudo = $pseudo;
         $this->partieGagnee = $partieGagnee;
         $this->nombreCoups = $nombreCoups;
@@ -28,24 +27,15 @@ class StatistiqueG {
     /**
      * @return String
      */
-    public function getPseudo()
-    {
-        return $this->pseudo;
-    }
+    public function getPseudo() { return $this->pseudo; }
 
     /**
      * @return boolean
      */
-    public function getPartieGagnee()
-    {
-        return $this->partieGagnee;
-    }
+    public function getPartieGagnee() { return $this->partieGagnee; }
 
     /**
      * @return int
      */
-    public function getNombreCoups()
-    {
-        return $this->nombreCoups;
-    }
+    public function getNombreCoups() { return $this->nombreCoups; }
 }
