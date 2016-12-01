@@ -79,7 +79,6 @@ class VJeuFini {
 
     public static function endOfGame() {
         if(!empty($_SESSION)) {
-            session_reset();
             session_destroy();
         }
         header("Location: index.php");

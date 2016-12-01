@@ -46,7 +46,6 @@ class Bd {
 
             if (empty($result)) return false;
             return crypt($password, $result[0]) == $result[0];
-
         } catch (PDOException $e) {
             $this->disconnect();
             throw new PDOException("BD::isPlayerRegistered() : problème vis-à-vis de la base de données");

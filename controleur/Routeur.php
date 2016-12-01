@@ -56,8 +56,7 @@ class Routeur {
     public function authentification($pseudo, $password) {
         $bd = new Bd();
 
-        if($this->bd->isPlayerRegistered($pseudo, $password)) {
-            $bd->disconnect();
+        if($bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
             $_SESSION['pseudo'] = $pseudo;
 

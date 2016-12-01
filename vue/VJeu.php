@@ -24,7 +24,7 @@ class VJeu {
             <html lang="fr">
                 <head>
                     <meta charset="UTF-8">
-                    <title>Mastermind de Vincent</title>
+                    <title>Mastermind</title>
 
                     <script type="text/javascript"></script>
                 </head>
