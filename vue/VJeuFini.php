@@ -21,7 +21,7 @@ class VJeuFini {
 
             <body>
                 <?php
-                if($_SESSION['jeu']->getIsWin()) echo "<h2>Bravo vous avez gagné la partie</h2>";
+                if($_SESSION['jeu']->isVictory()) echo "<h2>Bravo vous avez gagné la partie</h2>";
                 else echo "<h2>Dommage vous avez perdu la partie</h2>";
                 ?>
 
@@ -41,7 +41,7 @@ class VJeuFini {
 
                 <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
                     <?php
-                    for($i = 0; $i < $_SESSION['jeu']->getRemainingShots(); $i++) {
+                    for($i = 0; $i < $_SESSION['jeu']->getShotNumber(); $i++) {
                         echo "<tr> <!-- Une rangee du plateau -->";
 
                         for($j = 0; $j < 4; $j++) {

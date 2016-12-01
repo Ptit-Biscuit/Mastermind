@@ -32,7 +32,7 @@ class VJeu {
                 <body>
                     <h2>Bienvenue <?php if(isset($_SESSION['pseudo'])) echo $_SESSION['pseudo']; ?></h2>
 
-                    <h3><?php echo "Il vous reste ".(10 - $_SESSION['jeu']->getRemainingShots())." coups à jouer"; ?></h3>
+                    <h3><?php echo "Il vous reste ".(10 - $_SESSION['jeu']->getShotNumber())." coups à jouer"; ?></h3>
 
                     <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
                         <?php
