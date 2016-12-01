@@ -7,6 +7,7 @@
 namespace controleur;
 
 require_once __DIR__."/../vue/VJeu.php";
+use modele\StatistiqueG;
 use vue\VJeu;
 
 require_once __DIR__."/../vue/VJeuFini.php";
@@ -14,6 +15,9 @@ use vue\VJeuFini;
 
 require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
+
+require_once __DIR__."/../modele/Bd.php";
+use modele\Bd;
 
 require_once __DIR__."/../controleur/Routeur.php";
 
@@ -49,7 +53,10 @@ class CJeu {
 
         if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
         else {
+            $bd = new Bd();
+            $statsG = new StatistiqueG($_SESSION['pseudo'], $_SESSION['jeu']->isVictory(), $_SESSION['jeu']->getShotNumber);
 
+            $bd->store($statsG);
             VJeuFini::gameOver();
         }
     }

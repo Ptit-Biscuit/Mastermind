@@ -19,16 +19,10 @@ require_once __DIR__."/../controleur/CJeu.php";
 
 class Routeur {
     /**
-     * @var Bd La base de données utilisée
-     */
-    private $bd;
-
-    /**
      * Le constructeur de Routeur
      */
     public function __construct() {
         if(empty($_SESSION)) session_start();
-        $this->bd = new Bd();
         $this->routeRequest();
     }
 
@@ -47,7 +41,6 @@ class Routeur {
             else if(isset($_POST['retry'])) CJeu::startGame(); // si on veut recommencer le jeu
             else if(isset($_POST['quit'])) CJeu::quitGame(); // si on veut quitter le jeu
             else if(isset($_POST['disconnect'])) {
-                $this->bd->disconnect();
                 CJeu::disconnect();
             }
             else CJeu::contGame(); // sinon on continue le jeu
@@ -61,7 +54,10 @@ class Routeur {
      * @param $password String Le mot de passe du joueur
      */
     public function authentification($pseudo, $password) {
+        $bd = new Bd();
+
         if($this->bd->isPlayerRegistered($pseudo, $password)) {
+            $bd->disconnect();
             $_SESSION['userLogged'] = true;
             $_SESSION['pseudo'] = $pseudo;
 
@@ -69,10 +65,4 @@ class Routeur {
         }
         else Erreur::displayAuthFail();
     }
-
-    /**
-     * Getter de la base de donées utilisée
-     * @return Bd La base de donées utilisée
-     */
-    public function getBd() { return $this->bd; }
 }
