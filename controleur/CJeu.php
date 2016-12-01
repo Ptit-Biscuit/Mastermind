@@ -45,7 +45,9 @@ class CJeu {
      * Méthode qui valide une ligne du plateau et créée les statistiques en fin de partie
      */
     public static function validate() {
-        if($_SESSION['jeu']->validate()) VJeu::displayGame($_SESSION['jeu']->getBoard());
+        $_SESSION['jeu']->validate();
+
+        if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
         else {
 
             VJeuFini::gameOver();

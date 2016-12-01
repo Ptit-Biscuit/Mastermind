@@ -110,11 +110,12 @@ class Jeu {
 		    $won = true;
 		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
 		    $this->victory = $won;
-		
+
 		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
 		    
 		    $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+            $this->idNextCase = 0;
 		    if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
 	    }
     }
