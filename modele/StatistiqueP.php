@@ -14,7 +14,7 @@ class StatistiqueP {
 	private $nbCoupsPourGagner;
 
 	/**
-	 * StatistiqueP constructor.
+	 * Le constructeurs de StatistiqueP (stats des joueurs)
 	 * @param $pseudo String le pseudo du joueur
 	 * @param $nbParties int nombre de parties jouées, au total
 	 * @param $nbPartiesGagnees int nombre de parties gagnées, au total
@@ -30,28 +30,20 @@ class StatistiqueP {
 	/**
 	 * @return int
 	 */
-	public function getNbParties() {
-		return $this->nbParties;
-	}
+	public function getNbParties() { return $this->nbParties; }
 
 	/**
 	 * @return int
 	 */
-	public function getNbPartiesGagnees() {
-		return $this->nbPartiesGagnees;
-	}
+	public function getNbPartiesGagnees() { return $this->nbPartiesGagnees; }
 
 	/**
 	 * @return int
 	 */
-	public function getNbCoupsPourGagner() {
-		return $this->nbCoupsPourGagner;
-	}
+	public function getNbCoupsPourGagner() { return $this->nbCoupsPourGagner; }
 
 	/**
 	 * @return String
 	 */
-	public function getPseudo() {
-		return $this->pseudo;
-	}
+	public function getPseudo() { return $this->pseudo; }
 }
