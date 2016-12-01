@@ -1,16 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Ptit-Biscuit
- * Date: 29/11/2016
- * Time: 21:34
+ * @author Rémi Taunay
+ * @author Vincent Brebion
  */
 
 namespace vue;
 
-require_once __DIR__."/../vue/Erreur.php";
+require_once __DIR__."../vue/Erreur.php";
 
-require_once __DIR__."/../modele/Plateau.php";
+require_once __DIR__."../modele/Plateau.php";
 use modele\Plateau;
 
 class VJeu {
