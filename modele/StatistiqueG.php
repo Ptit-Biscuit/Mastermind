@@ -15,7 +15,7 @@ class StatistiqueG {
     /**
      * Le constructeur de StatistiqueG (stats des parties)
      * @param $pseudo String le pseudo du joueur
-     * @param $partieGagnee bool true si la partie a été gagnée, false sinon
+     * @param $partieGagnee int 1 si la partie a été gagnée, 0 sinon
      * @param $nombreCoups int nombre de coups joués lors de cette partie
      */
     public function __construct($pseudo, $partieGagnee, $nombreCoups) {

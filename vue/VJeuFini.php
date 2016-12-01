@@ -26,8 +26,8 @@ class VJeuFini {
                 $shotNumber = $_SESSION['jeu']->getShotNumber();
 
                 if($_SESSION['jeu']->isVictory())
-                    echo "<h2>Bravo vous avez gagné la partie en ".$shotNumber." coup(s)</h2>";
-                else echo "<h2>Dommage vous avez perdu la partie en ".$shotNumber." coup(s)</h2>";
+                    echo "<h2>Bravo ".$_SESSION['pseudo']." vous avez gagné la partie en ".$shotNumber." coup(s)</h2>";
+                else echo "<h2>Dommage ".$_SESSION['pseudo']." vous avez perdu la partie en ".$shotNumber." coup(s)</h2>";
                 ?>
 
                 <h3>La solution était:</h3>
@@ -73,8 +73,6 @@ class VJeuFini {
                     }
                     ?>
                 </table>
-            </body>
-        </html>
         <?php
     }
 
@@ -85,6 +83,26 @@ class VJeuFini {
      * @param $topFivePlayers array Le top 5 des meilleurs joueurs
      */
     public static function displayStats($playerStats, $topFivePlayers) {
+        ?>
+                <br>
+
+                <table style="width: 50%; height: auto;">
+                <?php
+                    echo "<tr><td><div>".$playerStats->getPseudo()."</div></td>";
+                    echo "<td><div>".$playerStats->getNbPartiesGagnees()."</div></td>";
+                    echo "<td><div>".$playerStats->getNbParties()."</div></td>";
+                    echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
+
+                    echo "<tr><td><div>".$playerStats->getPseudo()."</div></td>";
+                    echo "<td><div>".$playerStats->getNbPartiesGagnees()."</div></td>";
+                    echo "<td><div>".$playerStats->getNbParties()."</div></td>";
+                    echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
+                ?>
+                </table>
+            </body>
+        </html>
+
+        <?php
         VJeu::actionsEndGame();
     }
 
