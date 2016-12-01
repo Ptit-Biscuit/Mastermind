@@ -9,9 +9,8 @@ namespace vue;
 class VJeuFini {
     /**
      * Méthode qui affiche le résultat en fin de partie
-     * @param $winOrLose bool True si la partie est gagnée, false sinon
      */
-    public static function gameOver($winOrLose) {
+    public static function gameOver() {
         ?>
         <!DOCTYPE html>
         <html lang="fr">
@@ -22,7 +21,7 @@ class VJeuFini {
 
             <body>
                 <?php
-                if($winOrLose) echo "<h2>Bravo vous avez gagné la partie</h2>";
+                if($_SESSION['jeu']->getIsWin()) echo "<h2>Bravo vous avez gagné la partie</h2>";
                 else echo "<h2>Dommage vous avez perdu la partie</h2>";
                 ?>
 

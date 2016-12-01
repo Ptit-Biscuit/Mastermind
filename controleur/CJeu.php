@@ -43,11 +43,11 @@ class CJeu {
      * Méthode qui valide une ligne du plateau
      */
     public static function validate() {
-        $resultValidation = $_SESSION['jeu']->validate();
+        if($_SESSION['jeu']->validate()) VJeu::displayGame($_SESSION['jeu']->getBoard());
+        else {
 
-        if($_SESSION['jeu']->getIsWin()) VJeuFini::gameOver(true);
-        else if($resultValidation) VJeu::displayGame($_SESSION['jeu']->getBoard());
-        else VJeuFini::gameOver(false);
+            VJeuFini::gameOver();
+        }
     }
 
     /**
