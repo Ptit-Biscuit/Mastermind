@@ -36,8 +36,6 @@ class Rangee {
         for($i = 0; $i < 4; $i++) array_push($soluceCases, $colors[rand(0, 7)]);
 
         $this->setCases($soluceCases);
-
-        print_r($soluceCases);
     }
 
     /**
