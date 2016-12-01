@@ -13,16 +13,25 @@ class VJeuFini {
      */
     public static function gameOver($winOrLose) {
         ?>
+        <!DOCTYPE html>
+        <html lang="fr">
+            <head>
+                <meta charset="utf-8">
+                <title>Fin du jeu</title>
+            </head>
 
-        <?php if($winOrLose) echo "vous avez gagné la partie    BRAVO";
-        else echo "Dommage vous avez perdu la partie"; ?>
-
+            <body>
+                <?php if($winOrLose) echo "vous avez gagné la partie    BRAVO";
+                else echo "Dommage vous avez perdu la partie"; ?>
+            </body>
+        </html>
         <?php
+
+        if(!empty($_SESSION)) session_destroy();
+        if(!empty($_COOKIE)) unset($_COOKIE);
+
         VJeu::actionsEndGame();
     }
 
-    public static function endOfGame() {
-        if(!empty($_SESSION)) session_destroy();
-        header("Location: index.php");
-    }
+    public static function endOfGame() { header("Location: index.php"); }
 }

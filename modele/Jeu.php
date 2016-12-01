@@ -42,29 +42,31 @@ class Jeu {
             $this->board = new Plateau();
             $this->remainingShots = 10;
             $this->idNextCase = 0;
-
-            VJeu::displayGame($this->board);
         }
     }
 
     /**
      * Méthode qui actualise la vue du jeu
      * @param $color String La couleur à ajouter
+     * @return bool True si l'update c'est bien déroulée, false sinon
      */
     public function updateBoard($color) {
         if($this->idNextCase < 4) {
             $this->board->getTries()[10 - $this->remainingShots]->setCase($this->idNextCase, $color);
             $this->idNextCase++;
-        }
-        else VJeu::displayMustValidate();
 
-        VJeu::displayGame($this->board);
+            return true;
+        }
+        else return false;
     }
 
     /**
      * Méthode qui valide une rangée du plateau en fonction de la solution
+     * @return bool True si la rangée a bien été validée, false sinon
      */
     public function validate() {
+        $valide = true;
+
         if($this->remainingShots > 1) {
             $row = $this->board->getTries()[10 - $this->remainingShots]->getCases();
 
@@ -85,22 +87,18 @@ class Jeu {
 
                 if(($verif[0] == "black") && ($verif[1] == "black")
                     && ($verif[2] == "black") && ($verif[3] == "black")) {
-                    VJeuFini::gameOver(true);
-                    exit;
+                    setcookie('endGame', true);
                 }
                 else {
-                    print_r($verif);
                     sort($verif);
-                    print_r($verif);
                     $this->board->getTries()[10 - $this->remainingShots]->setVerif($verif);
                     $this->idNextCase = 0;
                     $this->remainingShots--;
                 }
             }
+        } else $valide = false;
 
-            VJeu::displayGame($this->board);
-        }
-        else VJeuFini::gameOver(false);
+        return $valide;
     }
 
     /**
@@ -114,8 +112,6 @@ class Jeu {
             $reset = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
             $line->setCases($reset);
             $this->idNextCase = 0;
-
-            VJeu::displayGame($this->board);
         }
     }
 

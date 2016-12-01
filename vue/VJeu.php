@@ -125,7 +125,7 @@ class VJeu {
     public static function actionsEndGame() {
         echo "<form action=\"index.php\" method=\"post\">";
         echo "<input type=\"submit\" name=\"retry\" value=\"Rejouer\">";
-        echo "<input type=\"submit\" name=\"quit\" value=\"Quitter\">";
+        echo "<input type=\"submit\" name=\"disconnect\" value=\"Quitter\">";
         echo "</form>";
     }
 
