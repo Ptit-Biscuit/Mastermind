@@ -6,7 +6,7 @@
 
 namespace vue;
 
-class VJeuTerminer {
+class VJeuFini {
     /**
      * Méthode qui affiche le résultat en fin de partie
      * @param $winOrLose bool True si la partie est gagnée, false sinon

@@ -12,8 +12,8 @@ use vue\Erreur;
 require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
-require_once __DIR__."/../vue/VJeuTerminer.php";
-use vue\VJeuTerminer;
+require_once __DIR__ . "/../vue/VJeuFini.php";
+use vue\VJeuFini;
 
 require_once __DIR__."/../modele/Plateau.php";
 
@@ -85,7 +85,7 @@ class Jeu {
 
                 if(($verif[0] == "black") && ($verif[1] == "black")
                     && ($verif[2] == "black") && ($verif[3] == "black")) {
-                    VJeuTerminer::gameOver(true);
+                    VJeuFini::gameOver(true);
                     exit;
                 }
                 else {
@@ -100,7 +100,7 @@ class Jeu {
 
             VJeu::displayGame($this->board);
         }
-        else VJeuTerminer::gameOver(false);
+        else VJeuFini::gameOver(false);
     }
 
     /**
