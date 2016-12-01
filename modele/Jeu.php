@@ -24,6 +24,11 @@ class Jeu {
     private $remainingShots;
 
     /**
+     * @var bool True si la partie est gagnée, false sinon
+     */
+    private $isWin;
+
+    /**
      * @var int L'indice de la prochaine case à colorer
      */
     private $idNextCase;
@@ -35,7 +40,8 @@ class Jeu {
         if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
         else {
             $this->board = new Plateau();
-            $this->remainingShots = 10;
+            $this->remainingShots = 0;
+            $this->isWin = false;
             $this->idNextCase = 0;
         }
     }
@@ -47,7 +53,7 @@ class Jeu {
      */
     public function updateBoard($color) {
         if($this->idNextCase < 4) {
-            $this->board->getTries()[10 - $this->remainingShots]->setCase($this->idNextCase, $color);
+            $this->board->getTries()[$this->remainingShots]->setCase($this->idNextCase, $color);
             $this->idNextCase++;
 
             return true;
@@ -62,8 +68,8 @@ class Jeu {
     public function validate() {
         $valide = true;
 
-        if($this->remainingShots > 0) {
-            $row = $this->board->getTries()[10 - $this->remainingShots]->getCases();
+        if($this->remainingShots < 10) {
+            $row = $this->board->getTries()[$this->remainingShots]->getCases();
 
             if(!in_array("darkgrey", $row)) {
                 $soluce = $this->board->getSoluce()->getCases();
@@ -82,17 +88,15 @@ class Jeu {
 
                 if(($verif[0] == "black") && ($verif[1] == "black")
                     && ($verif[2] == "black") && ($verif[3] == "black")) {
-                    setcookie('endGame', true);
+                    $this->isWin = true;
                 }
                 else {
                     sort($verif);
-                    $this->board->getTries()[10 - $this->remainingShots]->setVerif($verif);
+                    $this->board->getTries()[$this->remainingShots]->setVerif($verif);
                     $this->idNextCase = 0;
-                    $this->remainingShots--;
+                    $this->remainingShots++;
                 }
             }
-
-            if($this->remainingShots == 0) VJeu::displaySoluce($this->board);
         } else $valide = false;
 
         return $valide;
@@ -102,7 +106,7 @@ class Jeu {
      * Méthode qui efface la ligne en cours
      */
     public function eraseLine() {
-        $line = $this->board->getTries()[10 - $this->remainingShots];
+        $line = $this->board->getTries()[$this->remainingShots];
         $lineCases = $line->getVerif();
 
         if(!in_array("black", $lineCases) or !in_array("white", $lineCases)) {
@@ -123,4 +127,10 @@ class Jeu {
      * @return int Le nombre de coups restant
      */
     public function getRemainingShots() { return $this->remainingShots; }
+
+    /**
+     * Getter du résultat de fin de partie
+     * @return bool True si la partie est gagnée, false sinon
+     */
+    public function getIsWin() { return $this->isWin; }
 }

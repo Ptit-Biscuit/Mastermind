@@ -45,7 +45,7 @@ class CJeu {
     public static function validate() {
         $resultValidation = $_SESSION['jeu']->validate();
 
-        if($resultValidation && isset($_COOKIE['endGame'])) VJeuFini::gameOver(true);
+        if($_SESSION['jeu']->getIsWin()) VJeuFini::gameOver(true);
         else if($resultValidation) VJeu::displayGame($_SESSION['jeu']->getBoard());
         else VJeuFini::gameOver(false);
     }

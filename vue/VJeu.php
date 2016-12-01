@@ -32,7 +32,7 @@ class VJeu {
                 <body>
                     <h2>Bienvenue <?php if(isset($_SESSION['pseudo'])) echo $_SESSION['pseudo']; ?></h2>
 
-                    <h3><?php echo "Il vous reste ".$_SESSION['jeu']->getRemainingShots()." coups à jouer"; ?></h3>
+                    <h3><?php echo "Il vous reste ".(10 - $_SESSION['jeu']->getRemainingShots())." coups à jouer"; ?></h3>
 
                     <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
                         <?php
@@ -80,8 +80,6 @@ class VJeu {
                         </tr>
                     </table>
 
-                    <br>
-
                     <?php
                         self::actions();
                     ?>
@@ -92,25 +90,6 @@ class VJeu {
     }
 
     /**
-     * @param $plateau Plateau Le plateau de la partie
-     */
-    public static function displaySoluce($plateau) {
-        ?>
-        <h2>La partie est terminée</h2>
-
-        <h3>La solution était:</h3>
-
-        <table style="width: 60%; border: 2px solid black;"> <!-- Plateau de la soluce -->
-            <?php
-            for($i = 0; $i < 4; $i++)
-                echo "<td style=\"width: 15%; height: 30px; background-color: ".$plateau->getSoluce()->getCases()[$i].";\">";
-            echo "<div></div></td>";
-            ?>
-        </table>
-        <?php
-    }
-
-    /**
      * Méthode qui affiche les possibilités pendant une partie
      * Les possibilités sont:
      *      1) Valider le coup
@@ -118,6 +97,7 @@ class VJeu {
      *      3) Quitter
      */
     public static function actions() {
+        echo "<br>";
         echo "<form action=\"index.php\" method=\"post\">";
         echo "<input type=\"submit\" name=\"validate\" value=\"Valider\">";
         echo "<input type=\"submit\" name=\"erase\" value=\"Effacer\">";
@@ -132,6 +112,7 @@ class VJeu {
      *      2) Quitter
      */
     public static function actionsEndGame() {
+        echo "<br>";
         echo "<form action=\"index.php\" method=\"post\">";
         echo "<input type=\"submit\" name=\"retry\" value=\"Rejouer\">";
         echo "<input type=\"submit\" name=\"disconnect\" value=\"Quitter\">";
