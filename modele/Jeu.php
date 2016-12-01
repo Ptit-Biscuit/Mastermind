@@ -84,7 +84,7 @@ class Jeu {
 	
 	    // si la rangée soumise n'est pas pleine, elle ne peut pas être valide (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
 	    // on ne prend donc en compte le coup que si la rangée soumise est valide
-	    if(!in_array("darkgrey", $shot)) {
+	    if(!in_array('darkgrey', $shot)) {
 		    
 		    $answer = $this->board->getSoluce()->getCases(); // récupère la rangée secrète (aka la solution)
 			$match = ['', '', '', '']; // construction des vérifications
@@ -110,8 +110,8 @@ class Jeu {
 		    $won = true;
 		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
 		    $this->victory = $won;
-
-		    sort($match);
+		
+		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
 		    
 		    $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
