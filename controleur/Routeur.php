@@ -6,16 +6,16 @@
 
 namespace controleur;
 
-require_once __DIR__."../vue/Login.php";
+require_once __DIR__."/../vue/Login.php";
 use vue\Login;
 
-require_once __DIR__."../vue/Erreur.php";
+require_once __DIR__."/../vue/Erreur.php";
 use vue\Erreur;
 
-require_once __DIR__."../modele/Bd.php";
+require_once __DIR__."/../modele/Bd.php";
 use modele\Bd;
 
-require_once __DIR__."../controleur/CJeu.php";
+require_once __DIR__."/../controleur/CJeu.php";
 
 class Routeur {
     /**
