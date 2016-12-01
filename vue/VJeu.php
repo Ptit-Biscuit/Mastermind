@@ -83,22 +83,27 @@ class VJeu {
                     <?php
                         self::actions();
                     ?>
-
-                    <br>
-
-                    <p>affiche la solution pour verifier pendant les tests</p>
-
-                    <table style="width: 60%; border: 2px solid black;"> <!-- Plateau de la soluce -->
-                        <?php
-                        for($i = 0; $i < 4; $i++)
-                            echo "<td style=\"width: 15%; height: 30px; background-color: ".$plateau->getSoluce()->getCases()[$i].";\">";
-                            echo "<div></div></td>";
-                        ?>
-                    </table>
                 </body>
             </html>
             <?php
         }
+    }
+
+    /**
+     * @param $plateau Plateau Le plateau de la partie
+     */
+    public static function displaySoluce($plateau) {
+        ?>
+        <h2>La solution était:</h2>
+
+        <table style="width: 60%; border: 2px solid black;"> <!-- Plateau de la soluce -->
+            <?php
+            for($i = 0; $i < 4; $i++)
+                echo "<td style=\"width: 15%; height: 30px; background-color: ".$plateau->getSoluce()->getCases()[$i].";\">";
+            echo "<div></div></td>";
+            ?>
+        </table>
+        <?php
     }
 
     /**

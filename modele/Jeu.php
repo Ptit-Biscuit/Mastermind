@@ -8,12 +8,7 @@ namespace modele;
 
 require_once __DIR__."/../vue/Erreur.php";
 use vue\Erreur;
-
-require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
-
-require_once __DIR__."/../vue/VJeuFini.php";
-use vue\VJeuFini;
 
 require_once __DIR__."/../modele/Plateau.php";
 
@@ -67,7 +62,7 @@ class Jeu {
     public function validate() {
         $valide = true;
 
-        if($this->remainingShots > 1) {
+        if($this->remainingShots > 0) {
             $row = $this->board->getTries()[10 - $this->remainingShots]->getCases();
 
             if(!in_array("darkgrey", $row)) {
@@ -96,6 +91,8 @@ class Jeu {
                     $this->remainingShots--;
                 }
             }
+
+            if($this->remainingShots == 0) VJeu::displaySoluce($this->board);
         } else $valide = false;
 
         return $valide;

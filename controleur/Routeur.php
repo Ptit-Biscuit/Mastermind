@@ -44,13 +44,7 @@ class Routeur {
         else {
             if(isset($_POST['validate'])) CJeu::validate(); // si on veut valider notre coup
             else if(isset($_POST['erase'])) CJeu::eraseLine(); // si on veut effacer notre ligne
-            else if(isset($_POST['retry'])) {
-                if(isset($_COOKIE)) unset($_COOKIE);
-                session_start();
-                $_SESSION['userLogged'] = true;
-                $_SESSION['pseudo'] = $_POST['pseudo'];
-                CJeu::startGame();
-            } // si on veut recommencer le jeu
+            else if(isset($_POST['retry'])) CJeu::startGame(); // si on veut recommencer le jeu
             else if(isset($_POST['quit'])) CJeu::quitGame(); // si on veut quitter le jeu
             else if(isset($_POST['disconnect'])) {
                 $this->bd->disconnect();
