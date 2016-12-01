@@ -91,7 +91,7 @@ class VJeu {
                     <table style="width: 60%; border: 2px solid black;"> <!-- Plateau de la soluce -->
                         <?php
                         for($i = 0; $i < 4; $i++)
-                            echo "<td style=\"width: 15%; height: 25px; background-color: ".$plateau->getSoluce()->getCases()[$i].";\">";
+                            echo "<td style=\"width: 15%; height: 30px; background-color: ".$plateau->getSoluce()->getCases()[$i].";\">";
                             echo "<div></div></td>";
                         ?>
                     </table>
