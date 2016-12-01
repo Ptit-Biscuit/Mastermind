@@ -114,6 +114,7 @@ class VJeu {
     public static function actionsEndGame() {
         echo "<br>";
         echo "<form action=\"index.php\" method=\"post\">";
+        echo "<input type=\"submit\" name=\"stats\" value=\"Voir mes stats\">";
         echo "<input type=\"submit\" name=\"retry\" value=\"Rejouer\">";
         echo "<input type=\"submit\" name=\"disconnect\" value=\"Quitter\">";
         echo "</form>";

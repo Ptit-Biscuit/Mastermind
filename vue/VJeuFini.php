@@ -42,7 +42,7 @@ class VJeuFini {
 
                 <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
                     <?php
-                    for($i = 0; $i < 10; $i++) {
+                    for($i = 0; $i < $_SESSION['jeu']->getRemainingShots(); $i++) {
                         echo "<tr> <!-- Une rangee du plateau -->";
 
                         for($j = 0; $j < 4; $j++) {
@@ -80,8 +80,8 @@ class VJeuFini {
 
     public static function endOfGame() {
         if(!empty($_SESSION)) {
+            session_reset();
             session_destroy();
-            session_abort();
         }
         header("Location: index.php");
     }
