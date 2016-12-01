@@ -60,9 +60,14 @@ class Bd {
     {
         try {
             $stmt = $this->connexion->prepare("INSERT INTO parties(pseudo, partieGagnee, nombreCoups) VALUES(?, ?, ?);");
-            $stmt->bindParam(1, $lastGameStats->getPseudo());
-            $stmt->bindParam(2, $lastGameStats->getPartieGagnee());
-            $stmt->bindParam(3, $lastGameStats->getNombreCoups());
+
+            $pseudo = $lastGameStats->getPseudo();
+            $resultGame = $lastGameStats->getPartieGagnee();
+            $shotNumber = $lastGameStats->getNombreCoups();
+
+            $stmt->bindParam(1, $pseudo);
+            $stmt->bindParam(2, $resultGame);
+            $stmt->bindParam(3, $shotNumber);
             $stmt->execute();
 
         } catch (PDOException $e) {

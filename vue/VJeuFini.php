@@ -6,6 +6,8 @@
 
 namespace vue;
 
+use modele\StatistiqueP;
+
 class VJeuFini {
     /**
      * Méthode qui affiche le résultat en fin de partie
@@ -54,7 +56,7 @@ class VJeuFini {
                         echo "<tr> <!-- Une rangee du plateau -->";
 
                         for($j = 0; $j < 4; $j++) {
-                            echo "<td  style=\"width: 15%; height: 40px; background-color:";
+                            echo "<td style=\"width: 15%; height: 40px; background-color:";
                             echo $_SESSION['jeu']->getBoard()->getTries()[$i]->getCases()[$j].";\">"; // itération des cases
                             echo "<div></div>";
                             echo "</td> <!-- Une case de la rangee -->";
@@ -81,13 +83,22 @@ class VJeuFini {
         </html>
         <?php
 
+    /**
+     * Méthode permettant d'afficher les différentes statistiques
+     * sur le joueur, ainsi que le top 5 des meilleurs joueurs
+     * @param $playerStats StatistiqueP Les statistiques sur le joueur
+     * @param $topFivePlayers array Le top 5 des meilleurs joueurs
+     */
+    public static function displayStats($playerStats, $topFivePlayers) {
         VJeu::actionsEndGame();
     }
 
+    /**
+     * Méthode permettant de revenir à la page index.php
+     * (efface la variable $_SESSION)
+     */
     public static function endOfGame() {
-        if(!empty($_SESSION)) {
-            session_destroy();
-        }
+        if(!empty($_SESSION)) unset($_SESSION);
         header("Location: index.php");
     }
 }
