@@ -98,12 +98,11 @@ class Jeu {
 			    if($match[$i] != 'black') {
 			    	// on place un marqueur 'darkgrey' (gris) par couleur non présente
 				    if(!in_array($shot[$i], $answer)) $match[$i] = 'darkgrey';
+				    // à ce stade peu importe les couleurs restantes, elles sont présentes mais mal placées
+				    // il ne reste juste donc qu'à ajouter un marqueur 'white' (blanc)
+				    else $match[$i] = 'white';
 			    }
 		    }
-		    
-		    // à ce stade peu importe les couleurs restantes, elles sont présentes mais mal placées
-		    // il ne reste juste donc qu'à ajouter un marqueur 'white' (gris)
-		    for($i = 0; $i <= 3; $i++) if($match[$i] == '') $match[$i] = 'white';
 		    
 		    // s'il s'avère que toutes les pastilles de vérification sont noires,
 		    // alors on actualise le statut de la partie : c'est gagné !
