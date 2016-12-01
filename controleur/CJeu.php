@@ -7,8 +7,11 @@
 namespace controleur;
 
 require_once __DIR__."/../vue/VJeu.php";
-use modele\StatistiqueG;
+use PDOException;
 use vue\VJeu;
+
+require_once __DIR__."/../modele/StatistiqueG.php";
+use modele\StatistiqueG;
 
 require_once __DIR__."/../vue/VJeuFini.php";
 use vue\VJeuFini;
@@ -46,21 +49,32 @@ class CJeu {
     }
 
     /**
-     * Méthode qui valide une ligne du plateau et créée les statistiques en fin de partie
+     * Méthode qui valide une ligne du plateau
      */
     public static function validate() {
         $_SESSION['jeu']->validate();
 
+        // on continue le jeu
         if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
+        // la partie est terminée !
         else {
-            $bd = new Bd();
-            $statsG = new StatistiqueG($_SESSION['pseudo'], $_SESSION['jeu']->isVictory(), $_SESSION['jeu']->getShotNumber);
-
-            $bd->store($statsG);
+        	echo "<strong><pre><br />        (__)<br />        (oo)<br />  /------\/<br /> / |    ||<br />*  /\---/\<br />   ~~   ~~<br /></pre></strong>";
+        	self::genStats();
             VJeuFini::gameOver();
         }
     }
-
+	
+	/**
+	 * Génère les statistiques en fin de partie
+	 */
+	public static function genStats() {
+		$bd = new Bd();
+		$statsG = new StatistiqueG($_SESSION['pseudo'], $_SESSION['jeu']->isVictory(), $_SESSION['jeu']->getShotNumber());
+		try {
+			$bd->store($statsG);
+		} catch(PDOException $e) {}
+	}
+	
     /**
      * Méthode qui efface une ligne du plateau
      */
@@ -68,7 +82,7 @@ class CJeu {
         $_SESSION['jeu']->eraseLine();
         VJeu::displayGame($_SESSION['jeu']->getBoard());
     }
-
+    
     /**
      * Méthode pour quitter la partie
      */
