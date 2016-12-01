@@ -17,7 +17,7 @@ class Login {
             <head>
                 <meta charset="UTF-8">
                 <title>Login Mastermind</title>
-                <link rel="stylesheet" type="text/css" href="vue/login.css">
+                <link rel="stylesheet" type="text/css" href="/style/css/login.css">
             </head>
 
             <body>
