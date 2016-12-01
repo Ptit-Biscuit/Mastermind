@@ -28,6 +28,7 @@ class Routeur {
      */
     public function __construct() {
         if(empty($_SESSION)) session_start();
+        $this->bd = new Bd();
         $this->routeRequest();
     }
 
@@ -60,8 +61,6 @@ class Routeur {
      * @param $password String Le mot de passe du joueur
      */
     public function authentification($pseudo, $password) {
-        $this->bd = new Bd();
-
         if($this->bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
             $_SESSION['pseudo'] = $pseudo;
