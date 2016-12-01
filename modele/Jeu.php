@@ -52,7 +52,7 @@ class Jeu {
             $this->board = new Plateau();
             $this->shotNumber = 0;
             $this->idNextCase = 0;
-            $this->maxShotNb = 9;
+            $this->maxShotNb = 10;
             $this->finished = false;
             $this->victory = false;
         }
@@ -112,9 +112,9 @@ class Jeu {
 		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
 
-            if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
-            $this->idNextCase = 0;
             $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+            $this->idNextCase = 0;
+            if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
         }
     }
 
