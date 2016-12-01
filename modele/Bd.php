@@ -56,6 +56,25 @@ class Bd {
     }
 
     /**
+     * Méthode qui enregistre le résultat de la dernière partie jouée dans la base de données
+     * @param $lastGameStats Statistique Les statistiques de la derniere partie joué
+     */
+    public function store($lastGameStats)
+    {
+        try {
+            $stmt = $this->connexion->prepare("INSERT INTO parties(pseudo, partieGagnee, nombreCoups) VALUES(?, ?, ?);");
+            $stmt->bindParam(1, $lastGameStats->getPseudo());
+            $stmt->bindParam(2, $lastGameStats->getPartieGagnee());
+            $stmt->bindParam(3, $lastGameStats->getNombreCoups());
+            $stmt->execute();
+
+        } catch (PDOException $e) {
+            $this->disconnect();
+            throw new PDOException("BD::store() : problème vis-à-vis de la base de données");
+        }
+    }
+
+    /**
      * Méthode qui permet de fermer la connexion à la base de données
      */
     public function disconnect() {
