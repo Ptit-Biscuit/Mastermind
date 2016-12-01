@@ -27,7 +27,6 @@ class Routeur {
      * Le constructeur de Routeur
      */
     public function __construct() {
-        $this->bd = new Bd();
         if(empty($_SESSION)) session_start();
         $this->routeRequest();
     }
@@ -61,6 +60,8 @@ class Routeur {
      * @param $password String Le mot de passe du joueur
      */
     public function authentification($pseudo, $password) {
+        $this->bd = new Bd();
+
         if($this->bd->isPlayerRegistered($pseudo, $password)) {
             $_SESSION['userLogged'] = true;
             $_SESSION['pseudo'] = $pseudo;
@@ -69,4 +70,10 @@ class Routeur {
         }
         else Erreur::displayAuthFail();
     }
+
+    /**
+     * Getter de la base de donées utilisée
+     * @return Bd La base de donées utilisée
+     */
+    public function getBd() { return $this->bd; }
 }

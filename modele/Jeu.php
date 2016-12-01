@@ -110,7 +110,8 @@ class Jeu {
 		    $won = true;
 		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
 		    $this->victory = $won;
-			    
+
+		    sort($match);
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
 		    
 		    $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant

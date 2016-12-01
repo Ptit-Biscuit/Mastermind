@@ -15,6 +15,8 @@ use vue\VJeuFini;
 require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
 
+require_once __DIR__."/../controleur/Routeur.php";
+
 class CJeu {
     /**
      * Méthode qui commence une nouvelle partie
@@ -40,11 +42,12 @@ class CJeu {
     }
 
     /**
-     * Méthode qui valide une ligne du plateau
+     * Méthode qui valide une ligne du plateau et créée les statistiques en fin de partie
      */
     public static function validate() {
         if($_SESSION['jeu']->validate()) VJeu::displayGame($_SESSION['jeu']->getBoard());
         else {
+
             VJeuFini::gameOver();
         }
     }
