@@ -52,13 +52,14 @@ class CJeu {
      * Méthode qui valide une ligne du plateau
      */
     public static function validate() {
-        $_SESSION['jeu']->validate();
-
-        // on continue le jeu
-        if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
-        // la partie est terminée !
-        else {
-        	echo "<strong><pre><br />        (__)<br />        (oo)<br />  /------\/<br /> / |    ||<br />*  /\---/\<br />   ~~   ~~<br /></pre></strong>";
+        if(!$_SESSION['jeu']->isFinished()) { // on continue le jeu
+	        $_SESSION['jeu']->validate();
+	        if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
+	        else { // la partie est terminée !
+		        self::genStats();
+		        VJeuFini::gameOver();
+	        }
+        } else { // la partie est terminée !
         	self::genStats();
             VJeuFini::gameOver();
         }
