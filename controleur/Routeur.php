@@ -27,8 +27,8 @@ class Routeur {
      * Le constructeur de Routeur
      */
     public function __construct() {
-        if(empty($_SESSION)) session_start();
         $this->bd = new Bd();
+        if(empty($_SESSION)) session_start();
         $this->routeRequest();
     }
 
