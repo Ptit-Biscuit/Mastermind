@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Ptit-Biscuit
- * Date: 30/11/2016
- * Time: 19:51
+ * @author Rémi Taunay
+ * @author Vincent Brebion
  */
 
 namespace vue;

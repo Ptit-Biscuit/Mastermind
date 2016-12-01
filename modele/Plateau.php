@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: E155939Z
- * Date: 30/11/16
- * Time: 11:32
+ * @author Rémi Taunay
+ * @author Vincent Brebion
  */
 
 namespace modele;
