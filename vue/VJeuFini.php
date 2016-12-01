@@ -21,8 +21,8 @@ class VJeuFini {
             </head>
 
             <body>
-                <?php if($winOrLose) echo "vous avez gagné la partie    BRAVO";
-                else echo "Dommage vous avez perdu la partie"; ?>
+                <?php if($winOrLose) echo "<h2>Bravo vous avez gagné la partie</h2>";
+                else echo "<h2>Dommage vous avez perdu la partie</h2>"; ?>
             </body>
         </html>
         <?php

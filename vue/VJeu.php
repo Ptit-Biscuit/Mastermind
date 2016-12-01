@@ -32,6 +32,8 @@ class VJeu {
                 <body>
                     <h2>Bienvenue <?php if(isset($_SESSION['pseudo'])) echo $_SESSION['pseudo']; ?></h2>
 
+                    <h3><?php echo "Il vous reste ".$_SESSION['jeu']->getRemainingShots()." coups à jouer"; ?></h3>
+
                     <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
                         <?php
                         for($i = 0; $i < 10; $i++) {
@@ -94,7 +96,9 @@ class VJeu {
      */
     public static function displaySoluce($plateau) {
         ?>
-        <h2>La solution était:</h2>
+        <h2>La partie est terminée</h2>
+
+        <h3>La solution était:</h3>
 
         <table style="width: 60%; border: 2px solid black;"> <!-- Plateau de la soluce -->
             <?php

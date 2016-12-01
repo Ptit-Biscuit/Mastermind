@@ -117,4 +117,10 @@ class Jeu {
      * @return Plateau Le plateau du jeu
      */
     public function getBoard() { return $this->board; }
+
+    /**
+     * Getter du nombre de coups restants
+     * @return int Le nombre de coups restant
+     */
+    public function getRemainingShots() { return $this->remainingShots; }
 }
