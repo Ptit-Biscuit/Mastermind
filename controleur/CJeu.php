@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Ptit-Biscuit
- * Date: 01/12/2016
- * Time: 14:11
+ * @author Rémi Taunay
+ * @author Vincent Brebion
  */
 
 namespace controleur;
@@ -11,8 +9,8 @@ namespace controleur;
 require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
-require_once __DIR__."/../vue/VJeuFini.php";
-use vue\VJeuFini;
+require_once __DIR__."/../vue/VJeuTerminer.php";
+use vue\VJeuTerminer;
 
 require_once __DIR__."/../modele/Jeu.php";
 use modele\Jeu;
@@ -37,5 +35,5 @@ class CJeu {
     /**
      * Méthode pour quitter la partie
      */
-    public static function quitGame() { VJeuFini::endOfGame(); }
+    public static function quitGame() { VJeuTerminer::endOfGame(); }
 }
