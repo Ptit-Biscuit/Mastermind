@@ -9,7 +9,7 @@ namespace controleur;
 require_once __DIR__."/../vue/VJeu.php";
 use vue\VJeu;
 
-require_once __DIR__ . "/../vue/VJeuFini.php";
+require_once __DIR__."/../vue/VJeuFini.php";
 use vue\VJeuFini;
 
 require_once __DIR__."/../modele/Jeu.php";

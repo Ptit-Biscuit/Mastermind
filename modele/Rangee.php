@@ -6,7 +6,6 @@
 
 namespace modele;
 
-
 class Rangee {
     /**
      * @var array Les cases
