@@ -103,10 +103,30 @@ class VJeu {
         }
     }
 
+    /**
+     * Méthode qui affiche les possibilités pendant une partie
+     * Les possibilités sont:
+     *      1) Valider le coup
+     *      2) Effacer la ligne
+     *      3) Quitter
+     */
     public static function actions() {
         echo "<form action=\"index.php\" method=\"post\">";
         echo "<input type=\"submit\" name=\"validate\" value=\"Valider\">";
-        echo "<input type=\"submit\" name=\"retry\" value=\"Recommencer\">";
+        echo "<input type=\"submit\" name=\"erase\" value=\"Effacer\">";
+        echo "<input type=\"submit\" name=\"quit\" value=\"Quitter\">";
+        echo "</form>";
+    }
+
+    /**
+     * Méthode qui affiche les possibilités à la fin d'une partie
+     * Les possibilités sont:
+     *      1) Recommencer
+     *      2) Quitter
+     */
+    public static function actionsEndGame() {
+        echo "<form action=\"index.php\" method=\"post\">";
+        echo "<input type=\"submit\" name=\"retry\" value=\"Rejouer\">";
         echo "<input type=\"submit\" name=\"quit\" value=\"Quitter\">";
         echo "</form>";
     }

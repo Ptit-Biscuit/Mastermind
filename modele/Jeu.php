@@ -76,15 +76,13 @@ class Jeu {
 
                 for($i = 0; $i < count($soluce); $i++) {
                     // TODO gérer la validation de plusieurs fois la même couleur
-                    if(in_array($row[$i], $soluce) && ($row[$i] == $soluce[$i])) {
-                        $soluce[$i] = "darkgrey";
-                        $verif[$i] = "black";
-                    }
-                    else if(in_array($row[$i], $soluce) && ($row[$i] != $soluce[$i])) {
-
-                        $verif[$i] = "white";
+                    if(in_array($row[$i], $soluce)) {
+                        if($row[$i] != $soluce[$i]) $verif[$i] = "white";
+                        else $verif[$i] = "black";
                     }
                     else $verif[$i] = "darkgrey";
+
+                    $soluce[$i] = "darkgrey";
                 }
 
                 if(($verif[0] == "black") && ($verif[1] == "black")
@@ -93,7 +91,9 @@ class Jeu {
                     exit;
                 }
                 else {
+                    print_r($verif);
                     sort($verif);
+                    print_r($verif);
                     $this->board->getTries()[10 - $this->remainingShots]->setVerif($verif);
                     $this->idNextCase = 0;
                     $this->remainingShots--;
@@ -103,6 +103,22 @@ class Jeu {
             VJeu::displayGame($this->board);
         }
         else VJeuTerminer::gameOver(false);
+    }
+
+    /**
+     * Méthode qui efface la ligne en cours
+     */
+    public function eraseLine() {
+        $line = $this->board->getTries()[10 - $this->remainingShots];
+        $lineCases = $line->getVerif();
+
+        if(!in_array("black", $lineCases) or !in_array("white", $lineCases)) {
+            $reset = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
+            $line->setCases($reset);
+            $this->idNextCase = 0;
+
+            VJeu::displayGame($this->board);
+        }
     }
 
     /**

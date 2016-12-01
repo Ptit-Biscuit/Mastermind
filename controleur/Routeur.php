@@ -52,6 +52,7 @@ class Routeur {
         }
         else {
             if(isset($_POST['validate'])) $_SESSION['jeu']->validate(); // si on veut valider notre coup
+            else if(isset($_POST['erase'])) $_SESSION['jeu']->eraseLine(); // si on veut effacer notre ligne
             else if(isset($_POST['retry'])) $this->startGame(); // si on veut recommencer le jeu
             else if(isset($_POST['quit'])) $this->quitGame(); // si on veut quitter le jeu
             else $this->contGame(); // sinon on continue le jeu

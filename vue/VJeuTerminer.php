@@ -20,7 +20,7 @@ class VJeuTerminer {
         else echo "Dommage vous avez perdu la partie"; ?>
 
         <?php
-        VJeu::actions();
+        VJeu::actionsEndGame();
     }
 
     public static function endOfGame() {
