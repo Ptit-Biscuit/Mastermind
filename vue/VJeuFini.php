@@ -72,8 +72,6 @@ class VJeuFini {
         </html>
         <?php
 
-        if(!empty($_COOKIE)) unset($_COOKIE);
-
         VJeu::actionsEndGame();
     }
 
