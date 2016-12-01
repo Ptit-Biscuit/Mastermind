@@ -14,17 +14,10 @@ use vue\Login;
 require_once __DIR__."/../vue/Erreur.php";
 use vue\Erreur;
 
-require_once __DIR__."/../vue/VJeu.php";
-use vue\VJeu;
-
-require_once __DIR__."/../vue/VJeuTerminer.php";
-use vue\VJeuTerminer;
-
 require_once __DIR__."/../modele/Bd.php";
 use modele\Bd;
 
-require_once __DIR__."/../modele/Jeu.php";
-use modele\Jeu;
+require_once __DIR__."/../controleur/CJeu.php";
 
 class Routeur {
     /**
@@ -53,9 +46,9 @@ class Routeur {
         else {
             if(isset($_POST['validate'])) $_SESSION['jeu']->validate(); // si on veut valider notre coup
             else if(isset($_POST['erase'])) $_SESSION['jeu']->eraseLine(); // si on veut effacer notre ligne
-            else if(isset($_POST['retry'])) $this->startGame(); // si on veut recommencer le jeu
-            else if(isset($_POST['quit'])) $this->quitGame(); // si on veut quitter le jeu
-            else $this->contGame(); // sinon on continue le jeu
+            else if(isset($_POST['retry'])) CJeu::startGame(); // si on veut recommencer le jeu
+            else if(isset($_POST['quit'])) CJeu::quitGame(); // si on veut quitter le jeu
+            else CJeu::contGame(); // sinon on continue le jeu
         }
     }
 
@@ -70,29 +63,8 @@ class Routeur {
             $_SESSION['userLogged'] = true;
             $_SESSION['pseudo'] = $pseudo;
 
-            $this->startGame();
+            CJeu::startGame();
         }
         else Erreur::displayAuthFail();
     }
-
-    /**
-     * Méthode qui commence une nouvelle partie
-     */
-    public function startGame() { $_SESSION['jeu'] = new Jeu(); }
-
-    /**
-     * Méthode qui continue la partie en cours
-     */
-    public function contGame() {
-        if(isset($_SESSION['jeu']) && isset($_GET['color'])) {
-            $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");
-            if(in_array($_GET['color'], $colors)) $_SESSION['jeu']->updateBoard($_GET['color']);
-            else VJeu::displayGame($_SESSION['jeu']->getBoard());
-        }
-    }
-
-    /**
-     * Méthode pour quitter la partie
-     */
-    public function quitGame() { VJeuTerminer::endOfGame(); }
 }
