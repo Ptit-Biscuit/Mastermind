@@ -21,8 +21,8 @@ class Bd {
             /*$chaine="mysql:host=localhost;dbname=E155939Z";
             $this->connexion = new PDO($chaine,"E155939Z","E155939Z");*/
 
-            $chaine="mysql:host=localhost;dbname=sys";
-            $this->connexion = new PDO($chaine,"root","");
+            $chaine="mysql:host=localhost;dbname=dbmm";
+            $this->connexion = new PDO($chaine,"root","12345");
             $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw $e;
@@ -55,7 +55,7 @@ class Bd {
 
     /**
      * Méthode qui enregistre le résultat de la dernière partie jouée dans la base de données
-     * @param $lastGameStats Statistique Les statistiques de la derniere partie joué
+     * @param $lastGameStats StatistiqueG Les statistiques de la derniere partie joué
      */
     public function store($lastGameStats)
     {

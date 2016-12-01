@@ -20,14 +20,10 @@ class Plateau {
     private $soluce;
 
     /**
-     * Le construcyeur de Plateau
+     * Constructeur
      */
     public function __construct() {
-        $this->essais = array(new Rangee(), new Rangee(), new Rangee(),
-            new Rangee(), new Rangee(), new Rangee(),
-            new Rangee(), new Rangee(), new Rangee(),
-            new Rangee());
-
+    	for($i = 0; $i < 10; $i++) $this->essais[] = new Rangee();
         $this->soluce = new Rangee();
         $this->soluce->initSoluce();
     }

@@ -1,11 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Ptit-Biscuit
- * Date: 29/11/2016
- * Time: 19:51
+ * @author Rémi Taunay
+ * @author Vincent Brebion
  */
-
 require_once 'controleur/Routeur.php';
 use controleur\Routeur;
 new Routeur();
