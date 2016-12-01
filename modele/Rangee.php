@@ -33,7 +33,7 @@ class Rangee {
     public function initSoluce($colors) {
         $soluceCases = array();
 
-        for($i = 0; $i < 4; $i++) array_push($soluceCases, $this->colors[rand(0, 7)]);
+        for($i = 0; $i < 4; $i++) array_push($soluceCases, $colors[rand(0, 7)]);
 
         $this->setCases($soluceCases);
     }

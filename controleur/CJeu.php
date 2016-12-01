@@ -43,11 +43,10 @@ class CJeu {
      * Méthode qui valide une ligne du plateau
      */
     public static function validate() {
-        $resultValidation = $_SESSION['jeu']->validate();
-
-        if($resultValidation && isset($_COOKIE['endGame'])) VJeuFini::gameOver(true);
-        else if($resultValidation) VJeu::displayGame($_SESSION['jeu']->getBoard());
-        else VJeuFini::gameOver(false);
+        if($_SESSION['jeu']->validate()) VJeu::displayGame($_SESSION['jeu']->getBoard());
+        else {
+            VJeuFini::gameOver();
+        }
     }
 
     /**
@@ -61,7 +60,7 @@ class CJeu {
     /**
      * Méthode pour quitter la partie
      */
-    public static function quitGame() { VJeuFini::gameOver(false); }
+    public static function quitGame() { VJeuFini::gameOver(); }
 
     /**
      * Méthode pour se déconnecter de la partie
