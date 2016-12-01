@@ -1,0 +1,32 @@
+body {
+    background: url("bg.png") repeat;
+}
+
+.container {
+    margin: 0 auto;
+    position: relative;
+    width: 300px;
+}
+
+.login {
+    /*width: 300px;*/
+    /*margin: 0 auto;*/
+    /*position: relative;*/
+    padding: 20px 20px 20px;
+    font:small-caption;
+    font-size:16px;
+}
+
+/* placeholders centrés */
+::-webkit-input-placeholder {
+    text-align: center;
+}
+:-moz-placeholder { /* Firefox 18- */
+    text-align: center;
+}
+::-moz-placeholder {  /* Firefox 19+ */
+    text-align: center;
+}
+:-ms-input-placeholder {
+    text-align: center;
+}
