@@ -7,7 +7,6 @@
 namespace controleur;
 
 require_once __DIR__."/../vue/VJeu.php";
-use modele\StatistiqueG;
 use vue\VJeu;
 
 require_once __DIR__."/../vue/VJeuFini.php";
@@ -18,6 +17,9 @@ use modele\Jeu;
 
 require_once __DIR__."/../modele/Bd.php";
 use modele\Bd;
+
+require_once __DIR__."/../modele/StatistiqueG.php";
+use modele\StatistiqueG;
 
 require_once __DIR__."/../controleur/Routeur.php";
 

@@ -52,7 +52,7 @@ class Jeu {
             $this->board = new Plateau();
             $this->shotNumber = 0;
             $this->idNextCase = 0;
-            $this->maxShotNb = 10;
+            $this->maxShotNb = 9;
             $this->finished = false;
             $this->victory = false;
         }
@@ -89,7 +89,11 @@ class Jeu {
 			$match = ['', '', '', '']; // construction des vérifications
 		    
 		    // on commence par vérifier les pions de bonne couleur et bien placés (noir)
-		    for($i = 0; $i <= 3; $i++) if($shot[$i] == $answer[$i]) $match[$i] = 'black';
+		    for($i = 0; $i <= 3; $i++)
+		        if($shot[$i] == $answer[$i]) {
+		            $answer[$i] = 'darkgrey';
+		            $match[$i] = 'black';
+                }
 		    
 		    // puis on s'intéresse aux pions de bonne couleur mais mal placés
 		    for($i = 0; $i <= 3; $i++) {
