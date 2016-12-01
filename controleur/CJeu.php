@@ -56,7 +56,7 @@ class CJeu {
         if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
         else {
             $bd = new Bd();
-            $statsG = new StatistiqueG($_SESSION['pseudo'], $_SESSION['jeu']->isVictory(), $_SESSION['jeu']->getShotNumber);
+            $statsG = new StatistiqueG($_SESSION['pseudo'], $_SESSION['jeu']->isVictory(), $_SESSION['jeu']->getShotNumber());
 
             $bd->store($statsG);
             VJeuFini::gameOver();

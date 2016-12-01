@@ -6,6 +6,8 @@
 
 namespace vue;
 
+use modele\StatistiqueP;
+
 class VJeuFini {
     /**
      * Méthode qui affiche le résultat en fin de partie
@@ -21,8 +23,11 @@ class VJeuFini {
 
             <body>
                 <?php
-                if($_SESSION['jeu']->isVictory()) echo "<h2>Bravo vous avez gagné la partie</h2>";
-                else echo "<h2>Dommage vous avez perdu la partie</h2>";
+                $shotNumber = $_SESSION['jeu']->getShotNumber();
+
+                if($_SESSION['jeu']->isVictory())
+                    echo "<h2>Bravo vous avez gagné la partie en ".$shotNumber." coup(s)</h2>";
+                else echo "<h2>Dommage vous avez perdu la partie en ".$shotNumber." coup(s)</h2>";
                 ?>
 
                 <h3>La solution était:</h3>
@@ -71,14 +76,24 @@ class VJeuFini {
             </body>
         </html>
         <?php
+    }
 
+    /**
+     * Méthode permettant d'afficher les différentes statistiques
+     * sur le joueur, ainsi que le top 5 des meilleurs joueurs
+     * @param $playerStats StatistiqueP Les statistiques sur le joueur
+     * @param $topFivePlayers array Le top 5 des meilleurs joueurs
+     */
+    public static function displayStats($playerStats, $topFivePlayers) {
         VJeu::actionsEndGame();
     }
 
+    /**
+     * Méthode permettant de revenir à la page index.php
+     * (efface la variable $_SESSION)
+     */
     public static function endOfGame() {
-        if(!empty($_SESSION)) {
-            session_destroy();
-        }
+        if(!empty($_SESSION)) unset($_SESSION);
         header("Location: index.php");
     }
 }

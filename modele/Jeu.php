@@ -109,9 +109,16 @@ class Jeu {
 		    
 		    // s'il s'avère que toutes les pastilles de vérification sont noires,
 		    // alors on actualise le statut de la partie : c'est gagné !
-		    $won = true;
-		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
-		    $this->victory = $won;
+		    for($i = 0; $i <= 3; $i++) {
+		        if($match[$i] == 'black') {
+		            $this->victory = true;
+		            $this->finished = true;
+                }
+                else {
+		            $this->victory = false;
+		            break;
+		        }
+            };
 
 		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
