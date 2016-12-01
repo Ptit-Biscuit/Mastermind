@@ -62,16 +62,16 @@ class Jeu {
     /**
      * Méthode qui actualise la vue du jeu
      * @param $color String La couleur à ajouter
-     * @return bool True si la rangée est pleine, false sinon
+     * @return bool True si la rangée n'est pas pleine, false sinon
      */
     public function updateBoard($color) {
         if($this->idNextCase < 4) {
             $this->board->getTries()[$this->shotNumber]->setCase($this->idNextCase, $color);
             $this->idNextCase++;
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
