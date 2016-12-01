@@ -8,7 +8,6 @@ namespace modele;
 
 require_once __DIR__."/../vue/Erreur.php";
 use vue\Erreur;
-use vue\VJeu;
 
 require_once __DIR__."/../modele/Plateau.php";
 
@@ -112,11 +111,11 @@ class Jeu {
 
 		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
-		    
-		    $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+
+            if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
             $this->idNextCase = 0;
-		    if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
-	    }
+            $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+        }
     }
 
     /**
