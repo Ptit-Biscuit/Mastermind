@@ -52,17 +52,17 @@ class CJeu {
      * Méthode qui valide une ligne du plateau
      */
     public static function validate() {
-        if(!$_SESSION['jeu']->isFinished()) { // on continue le jeu
+        //if(!$_SESSION['jeu']->isFinished()) { // on continue le jeu
 	        $_SESSION['jeu']->validate();
 	        if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
 	        else { // la partie est terminée !
 		        self::genStats();
 		        VJeuFini::gameOver();
 	        }
-        } else { // la partie est terminée !
-        	self::genStats();
-            VJeuFini::gameOver();
-        }
+        //} else { // la partie est terminée !
+        //	self::genStats();
+        //    VJeuFini::gameOver();
+        //}
     }
 	
 	/**
@@ -70,7 +70,9 @@ class CJeu {
 	 */
 	public static function genStats() {
 		$bd = new Bd();
-		$statsG = new StatistiqueG($_SESSION['pseudo'], $_SESSION['jeu']->isVictory(), $_SESSION['jeu']->getShotNumber());
+		$gameResult = (int)$_SESSION['jeu']->isVictory();
+		$statsG = new StatistiqueG($_SESSION['pseudo'], $gameResult, $_SESSION['jeu']->getShotNumber());
+
 		try {
 			$bd->store($statsG);
 		} catch(PDOException $e) {}

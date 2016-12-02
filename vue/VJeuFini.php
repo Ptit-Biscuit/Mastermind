@@ -83,7 +83,7 @@ class VJeuFini {
         </html>
 	    <?php
     }
-    
+
     /**
      * Méthode permettant d'afficher les différentes statistiques
      * sur le joueur, ainsi que le top 5 des meilleurs joueurs
@@ -91,8 +91,32 @@ class VJeuFini {
      * @param $topFivePlayers array Le top 5 des meilleurs joueurs
      */
     public static function displayStats($playerStats, $topFivePlayers) {
+        ?>
+        <br>
+
+        <table style="width: 50%; height: auto;">
+            <?php
+            echo "<tr><td><div>".$playerStats->getPseudo()."</div></td>";
+            echo "<td><div>".$playerStats->getNbPartiesGagnees()."</div></td>";
+            echo "<td><div>".$playerStats->getNbParties()."</div></td>";
+            echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
+
+            foreach($topFivePlayers as $topPlayer) {
+                echo "<tr><td><div>".$topPlayer->getPseudo()."</div></td>";
+                echo "<td><div>".$topPlayer->getNbPartiesGagnees()."</div></td>";
+                echo "<td><div>".$topPlayer->getNbParties()."</div></td>";
+                echo "<td><div>".$topPlayer->getNbCoupsPourGagner()."</div></td></tr>";
+            }
+            ?>
+        </table>
+        </body>
+        </html>
+
+        <?php
         VJeu::actionsEndGame();
     }
+
+
 
     /**
      * Méthode permettant de revenir à la page index.php

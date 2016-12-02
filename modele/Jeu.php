@@ -84,10 +84,10 @@ class Jeu {
 	    // si la rangée soumise n'est pas pleine, elle ne peut pas être valide (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
 	    // on ne prend donc en compte le coup que si la rangée soumise est valide
 	    if(!in_array('darkgrey', $shot)) {
-		    
+
 		    $answer = $this->board->getSoluce()->getCases(); // récupère la rangée secrète (aka la solution)
 			$match = ['todo', 'todo', 'todo', 'todo']; // construction des vérifications
-		    
+
 		    // on commence par vérifier les pions de bonne couleur et bien placés (noir)
 		    for($i = 0; $i <= 3; $i++) {
 		    	if($shot[$i] == $answer[$i]) {
@@ -95,7 +95,7 @@ class Jeu {
 				    $answer[$i] = 'done'; // elle a été traitée
 		    	}
 		    }
-		
+
 		    // on s'occupe des pions de bonne couleur mais mal placés
 		    for($i = 0; $i <= 3; $i++) {
 			    if(($match[$i] == 'todo') && in_array($shot[$i], $answer)) {
@@ -106,19 +106,21 @@ class Jeu {
                     for($j = 0; $j <= 3; $j++) if($answer[$j] == $shot[$i]) {$answer[$j] = 'done'; break;};
 			    }
 		    }
-		
+
 		    // on met le reste en gris
 		    for($i = 0; $i <= 3; $i++) if($match[$i] == 'todo') $match[$i] = 'darkgrey';
-		    
-		        
+
+
 		    // s'il s'avère que toutes les pastilles de vérification sont noires,
 		    // alors on actualise le statut de la partie : c'est gagné !
-		    $won = true;
-		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
-		    $this->victory = $won;
-		    if($won) $this->finished = true; // si on a gagné, le jeu est fini
+		    for($i = 0; $i <= 3; $i++) {
+		        if($match[$i] == 'black') {
+                    $this->victory = true;
+                    $this->finished = true; // si on a gagné, le jeu est fini
+                }
+		    }
 		    
-//		    sort($match); // on "brasse"
+		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
 		    
             $this->idNextCase = 0;
