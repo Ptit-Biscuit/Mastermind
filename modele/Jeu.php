@@ -86,47 +86,45 @@ class Jeu {
 	    if(!in_array('darkgrey', $shot)) {
 		    
 		    $answer = $this->board->getSoluce()->getCases(); // récupère la rangée secrète (aka la solution)
-			$match = ['', '', '', '']; // construction des vérifications
+			$match = ['todo', 'todo', 'todo', 'todo']; // construction des vérifications
 		    
 		    // on commence par vérifier les pions de bonne couleur et bien placés (noir)
-		    for($i = 0; $i <= 3; $i++)
-		        if($shot[$i] == $answer[$i]) {
-		            $answer[$i] = 'darkgrey';
-		            $match[$i] = 'black';
-                }
-		    
-		    // puis on s'intéresse aux pions de bonne couleur mais mal placés
 		    for($i = 0; $i <= 3; $i++) {
-		    	// si la case n'est pas correcte d'emblée
-			    if($match[$i] != 'black') {
-			    	// on place un marqueur 'darkgrey' (gris) par couleur non présente
-				    if(!in_array($shot[$i], $answer)) $match[$i] = 'darkgrey';
-				    // à ce stade peu importe les couleurs restantes, elles sont présentes mais mal placées
-				    // il ne reste juste donc qu'à ajouter un marqueur 'white' (blanc)
-				    else $match[$i] = 'white';
+		    	if($shot[$i] == $answer[$i]) {
+		    		$match[$i] = 'black';
+				    $answer[$i] = 'done'; // elle a été traitée
+		    	}
+		    }
+		
+		    // on s'occupe des pions de bonne couleur mais mal placés
+		    for($i = 0; $i <= 3; $i++) {
+			    if(($match[$i] == 'todo') && in_array($shot[$i], $answer)) {
+				    $match[$i] = 'white';
+                    // cet exemplaire de couleur devient indisponible pour ses camarades
+                    // mais il n'est pas en face, on ne peut donc pas faire $answer[$i] = '';
+                    // on va donc prendre le premier disponible, et le rendre indisponible
+                    for($j = 0; $j <= 3; $j++) if($answer[$j] == $shot[$i]) {$answer[$j] = 'done'; break;};
 			    }
 		    }
+		
+		    // on met le reste en gris
+		    for($i = 0; $i <= 3; $i++) if($match[$i] == 'todo') $match[$i] = 'darkgrey';
 		    
+		        
 		    // s'il s'avère que toutes les pastilles de vérification sont noires,
 		    // alors on actualise le statut de la partie : c'est gagné !
-		    for($i = 0; $i <= 3; $i++) {
-		        if($match[$i] == 'black') {
-		            $this->victory = true;
-		            $this->finished = true;
-                }
-                else {
-		            $this->victory = false;
-		            break;
-		        }
-            };
-
-		    sort($match); // on "brasse"
+		    $won = true;
+		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
+		    $this->victory = $won;
+		    if($won) $this->finished = true; // si on a gagné, le jeu est fini
+		    
+//		    sort($match); // on "brasse"
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
-
-            $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+		    
             $this->idNextCase = 0;
-            if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
-        }
+		    if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
+		    if($this->shotNumber < 9) $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+	    }
     }
 
     /**
