@@ -12,7 +12,7 @@ use vue\Erreur;
 require_once __DIR__."/../modele/Plateau.php";
 
 class Jeu {
-	
+
     /**
      * @var Plateau Le plateau du jeu
      */
@@ -32,17 +32,17 @@ class Jeu {
      * @var int le nombre maximal autorisé de coups dans la partie, moins un
      */
     private $maxShotNb;
-	
-	/**
-	 * @var bool true si la partie est terminée, false sinon
-	 */
+
+    /**
+     * @var bool true si la partie est terminée, false sinon
+     */
     private $finished;
-	
-	/**
-	 * @var bool true si la partie est gagnée, false sinon
-	 */
+
+    /**
+     * @var bool true si la partie est gagnée, false sinon
+     */
     private $victory;
-    
+
     /**
      * Le constructeur de Jeu
      */
@@ -78,41 +78,41 @@ class Jeu {
      * Un coup est valide si quatre couleurs sont données (aucun case non colorée)
      */
     public function validate() {
-	    
-	    $shot = $this->board->getTries()[$this->shotNumber]->getCases(); // récupère ce qui a été joué
-	
-	    // si la rangée soumise n'est pas pleine, elle ne peut pas être valide (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
-	    // on ne prend donc en compte le coup que si la rangée soumise est valide
-	    if(!in_array('darkgrey', $shot)) {
-		    
-		    $answer = $this->board->getSoluce()->getCases(); // récupère la rangée secrète (aka la solution)
-			$match = ['todo', 'todo', 'todo', 'todo']; // construction des vérifications
-		    
-		    // on commence par vérifier les pions de bonne couleur et bien placés (noir)
-		    for($i = 0; $i <= 3; $i++) {
-		    	if($shot[$i] == $answer[$i]) {
-		    		$match[$i] = 'black';
-				    $answer[$i] = 'done'; // elle a été traitée
-		    	}
-		    }
-		
-		    // on s'occupe des pions de bonne couleur mais mal placés
-		    for($i = 0; $i <= 3; $i++) {
-			    if(($match[$i] == 'todo') && in_array($shot[$i], $answer)) {
-				    $match[$i] = 'white';
+
+        $shot = $this->board->getTries()[$this->shotNumber]->getCases(); // récupère ce qui a été joué
+
+        // si la rangée soumise n'est pas pleine, elle ne peut pas être valide (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
+        // on ne prend donc en compte le coup que si la rangée soumise est valide
+        if(!in_array('darkgrey', $shot)) {
+
+            $answer = $this->board->getSoluce()->getCases(); // récupère la rangée secrète (aka la solution)
+            $match = ['todo', 'todo', 'todo', 'todo']; // construction des vérifications
+
+            // on commence par vérifier les pions de bonne couleur et bien placés (noir)
+            for($i = 0; $i <= 3; $i++) {
+                if($shot[$i] == $answer[$i]) {
+                    $match[$i] = 'black';
+                    $answer[$i] = 'done'; // elle a été traitée
+                }
+            }
+
+            // on s'occupe des pions de bonne couleur mais mal placés
+            for($i = 0; $i <= 3; $i++) {
+                if(($match[$i] == 'todo') && in_array($shot[$i], $answer)) {
+                    $match[$i] = 'white';
                     // cet exemplaire de couleur devient indisponible pour ses camarades
                     // mais il n'est pas en face, on ne peut donc pas faire $answer[$i] = '';
                     // on va donc prendre le premier disponible, et le rendre indisponible
                     for($j = 0; $j <= 3; $j++) if($answer[$j] == $shot[$i]) {$answer[$j] = 'done'; break;};
-			    }
-		    }
-		
-		    // on met le reste en gris
-		    for($i = 0; $i <= 3; $i++) if($match[$i] == 'todo') $match[$i] = 'darkgrey';
-		    
-		        
-		    // s'il s'avère que toutes les pastilles de vérification sont noires,
-		    // alors on actualise le statut de la partie : c'est gagné !
+                }
+            }
+
+            // on met le reste en gris
+            for($i = 0; $i <= 3; $i++) if($match[$i] == 'todo') $match[$i] = 'darkgrey';
+
+
+            // s'il s'avère que toutes les pastilles de vérification sont noires,
+            // alors on actualise le statut de la partie : c'est gagné !
             for($i = 0; $i <= 3; $i++) {
                 if($match[$i] == 'black') {
                     $this->victory = true;
@@ -124,14 +124,14 @@ class Jeu {
                     break; // si une pastille n'est pas noire la partie n'est pas gagnée
                 }
             }
-		    
-		    sort($match); // on ordonne le tableau des vérifications
-		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
-		    
+
+            sort($match); // on ordonne le tableau des vérifications
+            $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
+
             $this->idNextCase = 0;
-		    if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
-		    else $this->shotNumber++; // sinon une tentative a été effectuée, donc on passe au coup suivant
-	    }
+            if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
+            if($this->shotNumber <= 9) $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+        }
     }
 
     /**
@@ -153,33 +153,33 @@ class Jeu {
      * @return Plateau Le plateau du jeu
      */
     public function getBoard() { return $this->board; }
-	
-	/**
-	 * @return int l'indice du coup actuel dans la grille
-	 */
-	public function getShotNumber() {
-		return $this->shotNumber;
-	}
-	
-	/**
-	 * @return int le nombre maximal de coups, moins un
-	 */
-	public function getMaxShotNb() {
-		return $this->maxShotNb;
-	}
-	
-	/**
-	 * @return boolean true si la partie est terminée, false sinon
-	 */
-	public function isFinished() {
-		return $this->finished;
-	}
-	
-	/**
-	 * @return boolean true si victoire, false si défaite
-	 */
-	public function isVictory() {
-		return $this->victory;
-	}
-	
+
+    /**
+     * @return int l'indice du coup actuel dans la grille
+     */
+    public function getShotNumber() {
+        return $this->shotNumber;
+    }
+
+    /**
+     * @return int le nombre maximal de coups, moins un
+     */
+    public function getMaxShotNb() {
+        return $this->maxShotNb;
+    }
+
+    /**
+     * @return boolean true si la partie est terminée, false sinon
+     */
+    public function isFinished() {
+        return $this->finished;
+    }
+
+    /**
+     * @return boolean true si victoire, false si défaite
+     */
+    public function isVictory() {
+        return $this->victory;
+    }
+
 }

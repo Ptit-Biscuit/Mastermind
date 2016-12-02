@@ -86,11 +86,6 @@ class CJeu {
     }
 
     /**
-     * Méthode pour quitter la partie
-     */
-    public static function quitGame() { VJeuFini::gameOver(); }
-
-    /**
      * Méthode pour se déconnecter de la partie
      */
     public static function disconnect() { VJeuFini::endOfGame(); }

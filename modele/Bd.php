@@ -107,8 +107,13 @@ class Bd {
     public function getPlayersStats() {
         try {
             $result = array();
-            $stmt = $this->connexion->query("SELECT p.pseudo, COUNT(*) AS nbParties, (SELECT COUNT(*) FROM parties pp WHERE pp.partieGagnee = TRUE) AS nbPartiesGagnees, (SELECT AVG(ppp.nombreCoups) FROM parties ppp WHERE ppp.partieGagnee = TRUE) AS nbCoupsPourGagner FROM parties p;");
-            while ($t = $stmt->fetch()) array_push($result, new StatistiqueP($t['pseudo'], $t['nbParties'], $t['nbPartiesGagnees'], $t['nbCoupsPourGagner']));
+            $stmt = $this->connexion->query("SELECT p.pseudo, COUNT(*) AS nbParties,
+              (SELECT COUNT(*) FROM parties pp WHERE pp.partieGagnee = TRUE) AS nbPartiesGagnees,
+              (SELECT AVG(ppp.nombreCoups) FROM parties ppp WHERE ppp.partieGagnee = TRUE) AS nbCoupsPourGagner FROM parties p;");
+
+            while ($t = $stmt->fetch())
+                array_push($result, new StatistiqueP($t['pseudo'], $t['nbParties'], $t['nbPartiesGagnees'], $t['nbCoupsPourGagner']));
+
             return $result;
         } catch (PDOException $e) {
             $this->disconnect();
@@ -160,7 +165,10 @@ class Bd {
          */
 
         try {
-            $stmt = $this->connexion->query("SELECT ((SELECT COUNT(*) FROM parties p WHERE p.partieGagnee = TRUE)/(SELECT COUNT(*) FROM parties)) AS tauxDeVictoireMoyen, (SELECT AVG(pp.nombreCoups) FROM parties pp) AS moyNbCoupsPourGagner;");
+            $stmt = $this->connexion->query("SELECT ((SELECT COUNT(*) FROM parties p 
+              WHERE p.partieGagnee = TRUE)/(SELECT COUNT(*) FROM parties)) AS tauxDeVictoireMoyen,
+              (SELECT AVG(pp.nombreCoups) FROM parties pp) AS moyNbCoupsPourGagner;");
+
             $t = $stmt->fetch();
             $tauxDeVictoireMoyen = $t['tauxDeVictoireMoyen'];
             $moyNbCoupsPourGagner = $t['moyNbCoupsPourGagner'];
