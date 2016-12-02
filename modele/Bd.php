@@ -23,8 +23,8 @@ class Bd {
             /*$chaine="mysql:host=localhost;dbname=E155939Z";
             $this->connexion = new PDO($chaine,"E155939Z","E155939Z");*/
 
-            $chaine="mysql:host=localhost;dbname=dbmm";
-            $this->connexion = new PDO($chaine,"root","12345");
+            $chaine="mysql:host=localhost;dbname=sys";
+            $this->connexion = new PDO($chaine,"root","");
             $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw $e;
@@ -150,7 +150,7 @@ class Bd {
          */
 
         try {
-            $stmt = $this->connexion->query("SELECT ((SELECT COUNT(*) FROM parties p WHERE p.partieGagnee = TRUE)/(SELECT COUNT(*) FROM parties)) AS tauxDeVictoireMoyen, (SELECT AVG(pp.nombreCoups) FROM parties pp) AS moyNbCoupsPourGagner");
+            $stmt = $this->connexion->query("SELECT ((SELECT COUNT(*) FROM parties p WHERE p.partieGagnee = TRUE)/(SELECT COUNT(*) FROM parties)) AS tauxDeVictoireMoyen, (SELECT AVG(pp.nombreCoups) FROM parties pp) AS moyNbCoupsPourGagner;");
             $t = $stmt->fetch();
             $tauxDeVictoireMoyen = $t['tauxDeVictoireMoyen'];
             $moyNbCoupsPourGagner = $t['moyNbCoupsPourGagner'];
@@ -158,17 +158,21 @@ class Bd {
             // on construit un tableau de classement
             $classement = array();
             $players = $this->getPlayersStats();
+
             foreach ($players as $p) {
                 $tab = array($p->getPseudo(), (($p->getNbPartiesGagnees() / $p->getNbParties()) - $tauxDeVictoireMoyen) + ($moyNbCoupsPourGagner / 10 - $p->getNbCoupsPourGagner() / 10));
                 array_push($classement, $tab);
             }
+
             rsort($classement, SORT_NUMERIC); // que l'on trie en fonction des indicateurs
 
             // puis on récupère les stats complètes des 5 meilleurs, que l'on retourne
             $top = array();
+
             for ($i = 0; $i <= 4; $i++) {
                 array_push($top, $this->getPlayerStats($classement[$i][0]));
             }
+
             return $top;
         } catch (PDOException $e) {
             $this->disconnect();

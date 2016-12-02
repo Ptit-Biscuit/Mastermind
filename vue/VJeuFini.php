@@ -74,6 +74,7 @@ class VJeuFini {
                     ?>
                 </table>
         <?php
+        VJeu::actionsEndGame();
     }
 
     /**
@@ -93,17 +94,17 @@ class VJeuFini {
                     echo "<td><div>".$playerStats->getNbParties()."</div></td>";
                     echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
 
-                    echo "<tr><td><div>".$playerStats->getPseudo()."</div></td>";
-                    echo "<td><div>".$playerStats->getNbPartiesGagnees()."</div></td>";
-                    echo "<td><div>".$playerStats->getNbParties()."</div></td>";
-                    echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
+                    foreach($topFivePlayers as $topPlayer) {
+                        echo "<tr><td><div>".$topPlayer->getPseudo()."</div></td>";
+                        echo "<td><div>".$topPlayer->getNbPartiesGagnees()."</div></td>";
+                        echo "<td><div>".$topPlayer->getNbParties()."</div></td>";
+                        echo "<td><div>".$topPlayer->getNbCoupsPourGagner()."</div></td></tr>";
+                    }
                 ?>
                 </table>
             </body>
         </html>
-
         <?php
-        VJeu::actionsEndGame();
     }
 
     /**

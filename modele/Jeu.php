@@ -113,17 +113,24 @@ class Jeu {
 		        
 		    // s'il s'avère que toutes les pastilles de vérification sont noires,
 		    // alors on actualise le statut de la partie : c'est gagné !
-		    $won = true;
-		    for($i = 0; $i <= 3; $i++) if($match[$i] != 'black') {$won = false; break;};
-		    $this->victory = $won;
-		    if($won) $this->finished = true; // si on a gagné, le jeu est fini
+            for($i = 0; $i <= 3; $i++) {
+                if($match[$i] == 'black') {
+                    $this->victory = true;
+                    $this->finished = true; // si on a gagné, le jeu est fini
+                }
+                else {
+                    $this->victory = false;
+                    $this->finished = false;
+                    break; // si une pastille n'est pas noire la partie n'est pas gagnée
+                }
+            }
 		    
-//		    sort($match); // on "brasse"
+		    sort($match); // on ordonne le tableau des vérifications
 		    $this->board->getTries()[$this->shotNumber]->setVerif($match); // on actualise les vérifications
 		    
             $this->idNextCase = 0;
 		    if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
-		    if($this->shotNumber < 9) $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+		    else $this->shotNumber++; // sinon une tentative a été effectuée, donc on passe au coup suivant
 	    }
     }
 

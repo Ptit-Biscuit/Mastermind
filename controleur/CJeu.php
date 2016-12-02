@@ -48,25 +48,30 @@ class CJeu {
     }
 
     /**
-     * Méthode qui valide une ligne du plateau et créée les statistiques en fin de partie
+     * Méthode qui valide une ligne du plateau
      */
     public static function validate() {
-        $_SESSION['jeu']->validate();
+        $_SESSION['jeu']->validate(); // on valide le coup ou non
 
-        if(!$_SESSION['jeu']->isFinished()) VJeu::displayGame($_SESSION['jeu']->getBoard());
-        else {
-            $bd = new Bd();
-
-            $gameResult = $_SESSION['jeu']->isVictory();
-            echo "game result ".(int)$gameResult;
-
-            $statsG = new StatistiqueG($_SESSION['pseudo'], (int)$gameResult, $_SESSION['jeu']->getShotNumber());
-
-            $bd->store($statsG);
-
-            VJeuFini::gameOver();
-            VJeuFini::displayStats($bd->getPlayerStats($_SESSION['pseudo']), $bd->getTopFive());
+        if(!$_SESSION['jeu']->isFinished()) // la partie n'est pas finie, on affiche le plateau
+            VJeu::displayGame($_SESSION['jeu']->getBoard());
+        else { // la partie est terminée !
+            self::genStats(); // on créé les statistiques de la partie
         }
+    }
+
+    /**
+     * Génère les statistiques en fin de partie
+     */
+    public static function genStats() {
+        $bd = new Bd();
+        $gameResult = (int)$_SESSION['jeu']->isVictory();
+        $statsG = new StatistiqueG($_SESSION['pseudo'], $gameResult, $_SESSION['jeu']->getShotNumber());
+
+        $bd->store($statsG);
+
+        VJeuFini::gameOver(); // on affiche la vue de fin de partie
+        VJeuFini::displayStats($bd->getPlayerStats($_SESSION['pseudo']), $bd->getTopFive());
     }
 
     /**
