@@ -125,7 +125,7 @@ class Jeu {
 		    
             $this->idNextCase = 0;
 		    if($this->shotNumber == $this->maxShotNb) $this->finished = true; // si il ne reste plus de coups, alors le jeu est terminé
-		    if($this->shotNumber < 9) $this->shotNumber++; // une tentative a été effectuée, donc on passe au coup suivant
+		    else $this->shotNumber++; // sinon une tentative a été effectuée, donc on passe au coup suivant
 	    }
     }
 
