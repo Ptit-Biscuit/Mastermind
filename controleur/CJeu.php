@@ -65,13 +65,16 @@ class CJeu {
      */
     public static function genStats() {
         $bd = new Bd();
-        $gameResult = (int)$_SESSION['jeu']->isVictory();
+
+        if($_SESSION['jeu']->isVictory()) $gameResult = 1;
+        else $gameResult = 0;
+
         $statsG = new StatistiqueG($_SESSION['pseudo'], $gameResult, $_SESSION['jeu']->getShotNumber());
 
         $bd->store($statsG);
 
         VJeuFini::gameOver(); // on affiche la vue de fin de partie
-        VJeuFini::displayStats($bd->getPlayerStats($_SESSION['pseudo']), $bd->getTopFive());
+        VJeuFini::displayStats($bd->getPlayerStats($_SESSION['pseudo']), $bd->getTopFiveSimple());
     }
 
     /**

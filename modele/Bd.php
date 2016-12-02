@@ -120,9 +120,19 @@ class Bd {
      * Renvoie les statistiques des 5 meilleurs joueurs
      * @return array Les statistiques relatives aux 5 meilleurs joueurs
      */
-    /*public function getTopFiveSimple() {
+    public function getTopFiveSimple() {
+        $topFive = array();
+        $playersStats = $this->getPlayersStats();
 
-    }*/
+        ksort($playersStats);
+
+        for($i = 0; $i < 5; $i++) $topFive[$i] = $playersStats[$i];
+
+        print_r($playersStats);
+        print_r($topFive);
+
+        return $topFive;
+    }
 
     /**
      * Renvoie les statistiques des 5 meilleurs joueurs

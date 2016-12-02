@@ -94,6 +94,8 @@ class VJeuFini {
                     echo "<td><div>".$playerStats->getNbParties()."</div></td>";
                     echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
 
+                    echo "</table><table style=\"width: 50%; height: auto;\">";
+
                     foreach($topFivePlayers as $topPlayer) {
                         echo "<tr><td><div>".$topPlayer->getPseudo()."</div></td>";
                         echo "<td><div>".$topPlayer->getNbPartiesGagnees()."</div></td>";
@@ -112,7 +114,7 @@ class VJeuFini {
      * (efface la variable $_SESSION)
      */
     public static function endOfGame() {
-        if(!empty($_SESSION)) unset($_SESSION);
-        header("Location: index.php");
+        session_destroy(); // on termine la session pour repartir proprement
+        header("Location: index.php"); // on redirige vers la page index.php
     }
 }
