@@ -87,20 +87,39 @@ class VJeuFini {
         ?>
                 <br>
 
-                <table style="width: 50%; height: auto;">
+                <table style="width: 50%;">
+                    <tr>
+                        <th>Joueur</th>
+                        <th>Parties gagnées</th>
+                        <th>Parties jouées</th>
+                        <th>Nombre de coups pour gagner</th>
+                    </tr>
                 <?php
-                    echo "<tr><td><div>".$playerStats->getPseudo()."</div></td>";
-                    echo "<td><div>".$playerStats->getNbPartiesGagnees()."</div></td>";
-                    echo "<td><div>".$playerStats->getNbParties()."</div></td>";
-                    echo "<td><div>".$playerStats->getNbCoupsPourGagner()."</div></td></tr>";
+                    echo "<tr style='width: inherit;'><td>".$playerStats->getPseudo()."</td>";
+                    echo "<td>".$playerStats->getNbPartiesGagnees()."</td>";
+                    echo "<td>".$playerStats->getNbParties()."</td>";
+                    echo "<td>".$playerStats->getNbCoupsPourGagner()."</td></tr>";
+                ?>
 
-                    echo "</table><table style=\"width: 50%; height: auto;\">";
+                </table>
 
+                <br>
+
+                <p><b>Le top cinq des meilleurs joueurs</b></p>
+                <table style='width: 50%;'>
+                    <tr>
+                        <th>Joueur</th>
+                        <th>Parties gagnées</th>
+                        <th>Parties jouées</th>
+                        <th>Nombre de coups pour gagner</th>
+                    </tr>
+
+                <?php
                     foreach($topFivePlayers as $topPlayer) {
-                        echo "<tr><td><div>".$topPlayer->getPseudo()."</div></td>";
-                        echo "<td><div>".$topPlayer->getNbPartiesGagnees()."</div></td>";
-                        echo "<td><div>".$topPlayer->getNbParties()."</div></td>";
-                        echo "<td><div>".$topPlayer->getNbCoupsPourGagner()."</div></td></tr>";
+                        echo "<tr style='width: inherit;'><td>".$topPlayer->getPseudo()."</td>";
+                        echo "<td>".$topPlayer->getNbPartiesGagnees()."</td>";
+                        echo "<td>".$topPlayer->getNbParties()."</td>";
+                        echo "<td>".$topPlayer->getNbCoupsPourGagner()."</td></tr>";
                     }
                 ?>
                 </table>
