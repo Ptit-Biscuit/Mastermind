@@ -78,7 +78,6 @@ class Jeu {
      * Un coup est valide si quatre couleurs sont données (aucun case non colorée)
      */
     public function validate() {
-
         $shot = $this->board->getTries()[$this->shotNumber]->getCases(); // récupère ce qui a été joué
 
         // si la rangée soumise n'est pas pleine, elle ne peut pas être valide (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
