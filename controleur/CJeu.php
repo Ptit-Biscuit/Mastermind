@@ -74,7 +74,7 @@ class CJeu {
         $bd->store($statsG);
 
         VJeuFini::gameOver(); // on affiche la vue de fin de partie
-        VJeuFini::displayStats($bd->getPlayerStats($_SESSION['pseudo']), $bd->getTopFiveSimple());
+        VJeuFini::displayStats($bd->getPlayerStats($_SESSION['pseudo']), $bd->getTopFive());
     }
 
     /**

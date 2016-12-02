@@ -109,7 +109,8 @@ class Bd {
             $result = array();
             $stmt = $this->connexion->query("SELECT p.pseudo, COUNT(*) AS nbParties,
               (SELECT COUNT(*) FROM parties pp WHERE pp.partieGagnee = TRUE) AS nbPartiesGagnees,
-              (SELECT AVG(ppp.nombreCoups) FROM parties ppp WHERE ppp.partieGagnee = TRUE) AS nbCoupsPourGagner FROM parties p;");
+              (SELECT AVG(ppp.nombreCoups) FROM parties ppp WHERE ppp.partieGagnee = TRUE) AS nbCoupsPourGagner
+              FROM parties p GROUP BY p.pseudo;");
 
             while ($t = $stmt->fetch())
                 array_push($result, new StatistiqueP($t['pseudo'], $t['nbParties'], $t['nbPartiesGagnees'], $t['nbCoupsPourGagner']));
@@ -119,24 +120,6 @@ class Bd {
             $this->disconnect();
             throw new PDOException("BD::getPlayersStats() : problème vis-à-vis de la base de données");
         }
-    }
-
-    /**
-     * Renvoie les statistiques des 5 meilleurs joueurs
-     * @return array Les statistiques relatives aux 5 meilleurs joueurs
-     */
-    public function getTopFiveSimple() {
-        $topFive = array();
-        $playersStats = $this->getPlayersStats();
-
-        ksort($playersStats);
-
-        for($i = 0; $i < 5; $i++) $topFive[$i] = $playersStats[$i];
-
-        print_r($playersStats);
-        print_r($topFive);
-
-        return $topFive;
     }
 
     /**
@@ -175,6 +158,8 @@ class Bd {
 
             // on construit un tableau de classement
             $classement = array();
+
+            // on récupère les stats de tous les joueurs
             $players = $this->getPlayersStats();
 
             foreach ($players as $p) {
@@ -183,12 +168,13 @@ class Bd {
             }
 
             rsort($classement, SORT_NUMERIC); // que l'on trie en fonction des indicateurs
+            array_slice($classement, 0, 5); // et on ne garde que les cinq premiers
 
             // puis on récupère les stats complètes des 5 meilleurs, que l'on retourne
             $top = array();
 
-            for ($i = 0; $i <= 4; $i++) {
-                array_push($top, $this->getPlayerStats($classement[$i][0]));
+            for ($i = 0; $i < count($classement); $i++) {
+                if($classement[$i][0] != "") $top[$i] = $this->getPlayerStats($classement[$i][0]);
             }
 
             return $top;
