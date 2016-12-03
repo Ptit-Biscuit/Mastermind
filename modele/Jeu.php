@@ -80,9 +80,10 @@ class Jeu {
     public function validate() {
         $shot = $this->board->getTries()[$this->shotNumber]->getCases(); // récupère ce qui a été joué
 
-        // si la rangée soumise n'est pas pleine, elle ne peut pas être valide (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
+        // si la rangée soumise n'est pas pleine, elle ne peut pas être valide
+        // (pas de "mode expert" où l'on peut jouer avec des trous, cf. règles du MM)
         // on ne prend donc en compte le coup que si la rangée soumise est valide
-        if(!in_array('darkgrey', $shot)) {
+        if(!in_array('lightgrey', $shot)) {
 
             $answer = $this->board->getSoluce()->getCases(); // récupère la rangée secrète (aka la solution)
             $match = ['todo', 'todo', 'todo', 'todo']; // construction des vérifications
@@ -107,7 +108,7 @@ class Jeu {
             }
 
             // on met le reste en gris
-            for($i = 0; $i <= 3; $i++) if($match[$i] == 'todo') $match[$i] = 'darkgrey';
+            for($i = 0; $i <= 3; $i++) if($match[$i] == 'todo') $match[$i] = 'lightgrey';
 
 
             // s'il s'avère que toutes les pastilles de vérification sont noires,
@@ -140,9 +141,9 @@ class Jeu {
         $line = $this->board->getTries()[$this->shotNumber];
         $lineCases = $line->getVerif();
 
-        if(!in_array("black", $lineCases) or !in_array("white", $lineCases)) {
-            $reset = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
-            $line->setCases($reset);
+        if(!in_array("black", $lineCases) or !in_array("white", $lineCases)) { // si la ligne n'a pas été validée
+            $reset = array("lightgrey", "lightgrey", "lightgrey", "lightgrey");
+            $line->setCases($reset); // on remet la couleur des cases à grise
             $this->idNextCase = 0;
         }
     }

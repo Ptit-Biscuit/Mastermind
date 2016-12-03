@@ -21,8 +21,8 @@ class Rangee {
      * Le constructeur de Rangee
      */
     public function __construct() {
-        $this->cases = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
-        $this->verif = array("darkgrey", "darkgrey", "darkgrey", "darkgrey");
+        $this->cases = array("lightgrey", "lightgrey", "lightgrey", "lightgrey");
+        $this->verif = array("lightgrey", "lightgrey", "lightgrey", "lightgrey");
     }
 
     /**
