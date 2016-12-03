@@ -1,0 +1,19 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Page de jeu */
+#jeu {
+    width: 80%;
+    margin: 0 auto auto;
+    text-align: center;
+    font:small-caption;
+    font-size:16px;
+}
+
+#jeu table {
+    width: 85%;
+    margin: inherit;
+    border: 2px solid black;
+}

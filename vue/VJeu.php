@@ -25,64 +25,66 @@ class VJeu {
                 <head>
                     <meta charset="UTF-8">
                     <title>Mastermind</title>
-
+                    <link rel="stylesheet" href="vue/style/css/jeu.css">
                     <script type="text/javascript"></script>
                 </head>
 
                 <body>
-                    <h2>Bienvenue <?php if(isset($_SESSION['pseudo'])) echo $_SESSION['pseudo']; ?></h2>
+                    <div id="jeu">
+                        <h2>Bienvenue <?php if(isset($_SESSION['pseudo'])) echo $_SESSION['pseudo']; ?></h2>
 
-                    <h3><?php echo "Il vous reste ".(10 - $_SESSION['jeu']->getShotNumber())." coups à jouer"; ?></h3>
+                        <h3><?php echo "Il vous reste ".(10 - $_SESSION['jeu']->getShotNumber())." coups à jouer"; ?></h3>
 
-                    <table style="width: 80%; border: 2px solid black;"> <!-- Plateau du jeu -->
-                        <?php
-                        for($i = 0; $i < 10; $i++) {
-                            echo "<tr> <!-- Une rangee du plateau -->";
-
-                            for($j = 0; $j < 4; $j++) {
-                                echo "<td style=\"width: 15%; height: 40px; background-color:";
-                                echo $plateau->getTries()[$i]->getCases()[$j].";\">"; // itération des cases
-                                echo "<div></div>";
-                                echo "</td> <!-- Une case de la rangee -->";
-                            }
-
-                            echo "<td style=\"width: 15%; border: 2px solid black;\">";
-                            echo "<table style=\"width: 100%;\">";
-                            echo "<tr style=\"height: 49%;\"> <!-- La case des vérif' -->";
-
-                            for($k = 0; $k < 4; $k++) {
-                                echo "<td style=\"height: 40px; background-color:";
-                                echo $plateau->getTries()[$i]->getVerif()[$k].";\">"; // itération des vérif'
-                                echo "<a href='index.php'></a>";
-                                echo "</td> <!-- Une vérification -->";
-                            }
-
-                            echo "</tr>";
-                            echo "</table>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </table>
-
-                    <br>
-
-                    <table style="width: 80%; border: 2px solid black;"> <!-- Plateau des couleurs possibles -->
-                        <tr>
+                        <table> <!-- Plateau du jeu -->
                             <?php
-                                $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");
+                            for($i = 0; $i < 10; $i++) {
+                                echo "<tr> <!-- Une rangee du plateau -->";
 
-                                foreach($colors as $color) {
-                                    echo "<td style=\"width: 10%; height: 30px; background-color:".$color."\">";
-                                    echo "<a style=\"display: block; width: 100%; height: 100%;\" href=\"index.php?color=".$color."\"></a>";
-                                    echo "</td>";
+                                for($j = 0; $j < 4; $j++) {
+                                    echo "<td style=\"width: 15%; height: 40px; background-color:";
+                                    echo $plateau->getTries()[$i]->getCases()[$j].";\">"; // itération des cases
+                                    echo "<div></div>";
+                                    echo "</td> <!-- Une case de la rangee -->";
                                 }
-                            ?>
-                        </tr>
-                    </table>
 
-                    <?php
-                        self::actions();
-                    ?>
+                                echo "<td style=\"width: 15%; border: 2px solid black;\">";
+                                echo "<table style=\"width: 100%;\">";
+                                echo "<tr style=\"height: 49%;\"> <!-- La case des vérif' -->";
+
+                                for($k = 0; $k < 4; $k++) {
+                                    echo "<td style=\"height: 40px; background-color:";
+                                    echo $plateau->getTries()[$i]->getVerif()[$k].";\">"; // itération des vérif'
+                                    echo "<a href='index.php'></a>";
+                                    echo "</td> <!-- Une vérification -->";
+                                }
+
+                                echo "</tr>";
+                                echo "</table>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </table>
+
+                        <br>
+
+                        <table> <!-- Plateau des couleurs possibles -->
+                            <tr>
+                                <?php
+                                    $colors = array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue");
+
+                                    foreach($colors as $color) {
+                                        echo "<td style=\"width: 10%; height: 30px; background-color:".$color."\">";
+                                        echo "<a style=\"display: block; width: 100%; height: 100%;\" href=\"index.php?color=".$color."\"></a>";
+                                        echo "</td>";
+                                    }
+                                ?>
+                            </tr>
+                        </table>
+
+                        <?php
+                            self::actions();
+                        ?>
+                    </div>
                 </body>
             </html>
             <?php
@@ -94,7 +96,7 @@ class VJeu {
      * Les possibilités sont:
      *      1) Valider le coup
      *      2) Effacer la ligne
-     *      3) Quitter
+     *      3) Quitter la partie
      */
     public static function actions() {
         echo "<br>";
@@ -108,14 +110,14 @@ class VJeu {
     /**
      * Méthode qui affiche les possibilités à la fin d'une partie
      * Les possibilités sont:
-     *      1) Recommencer
-     *      2) Quitter
+     *      1) Recommencer une partie
+     *      2) Se déconnecter
      */
     public static function actionsEndGame() {
         echo "<br>";
         echo "<form action=\"index.php\" method=\"post\">";
         echo "<input type=\"submit\" name=\"retry\" value=\"Rejouer\">";
-        echo "<input type=\"submit\" name=\"disconnect\" value=\"Quitter\">";
+        echo "<input type=\"submit\" name=\"disconnect\" value=\"Déconnexion\">";
         echo "</form>";
     }
 

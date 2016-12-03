@@ -21,18 +21,16 @@ class Login {
             </head>
 
             <body>
-                <div class="container">
-                    <div class="login">
-                        <h1>Authentification</h1>
+                <div id="login">
+                    <h1>Authentification</h1>
 
-                        <form action="index.php" method="POST" id="form">
-                            <input type="text" name="pseudo" placeholder="Identifiant"><br/>
-                            <input type="password" name="password" placeholder="Mot de passe"><br/>
+                    <form action="index.php" method="POST" id="form">
+                        <input type="text" name="pseudo" placeholder="Identifiant"><br/>
+                        <input type="password" name="password" placeholder="Mot de passe"><br/>
 
-                            <input type="submit">
-                            <input type="reset">
-                        </form>
-                    </div>
+                        <input type="submit">
+                        <input type="reset">
+                    </form>
                 </div>
             </body>
         </html>

@@ -1,20 +1,27 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background: url("../img/bg.png") repeat;
 }
 
-.container {
-    margin: 0 auto;
-    position: relative;
-    width: 300px;
-}
-
-.login {
-    /*width: 300px;*/
-    /*margin: 0 auto;*/
-    /*position: relative;*/
-    padding: 20px 20px 20px;
+/* Page de login */
+#login {
+    margin: 10% auto auto;
+    width: 251px;
     font:small-caption;
     font-size:16px;
+}
+
+#login h1 {
+    cursor: default;
+}
+
+#form {
+    width: inherit;
+    text-align: center;
 }
 
 /* placeholders centrés */
