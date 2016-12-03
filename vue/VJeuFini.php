@@ -20,6 +20,7 @@ class VJeuFini {
                 <meta charset="utf-8">
                 <title>Fin du jeu</title>
                 <link rel="stylesheet" type="text/css" href="vue/style/css/jeuFini.css">
+                <link rel="stylesheet" type="text/css" href="vue/style/css/jeu.css">
             </head>
 
             <body>

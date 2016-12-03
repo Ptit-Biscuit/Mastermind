@@ -25,11 +25,11 @@ class Login {
                     <h1>Authentification</h1>
 
                     <form action="index.php" method="POST" id="form">
-                        <input type="text" name="pseudo" placeholder="Identifiant"><br/>
-                        <input type="password" name="password" placeholder="Mot de passe"><br/>
+                        <input class="ids" type="text" name="pseudo" placeholder="Identifiant"><br/>
+                        <input class="ids" type="password" name="password" placeholder="Mot de passe"><br/>
 
-                        <input type="submit">
-                        <input type="reset">
+                        <input class="buttons" type="submit">
+                        <input class="buttons" type="reset">
                     </form>
                 </div>
             </body>
