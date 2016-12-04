@@ -70,13 +70,13 @@ class CJeu {
      * Génère les statistiques en fin de partie
      */
     public static function genStats() {
-        $bd = new Bd(); // on créer une nouvelle connexion à la base de données
+        $bd = new Bd(); // on crée une nouvelle connexion à la base de données
 
         // on caste le booléen de victoire en entier (1 pour une victoire, 0 pour une défaite)
         if($_SESSION['jeu']->isVictory()) $gameResult = 1;
         else $gameResult = 0;
 
-        // on créer les statistiques de la partie
+        // on crée les statistiques de la partie
         $statsG = new StatistiqueG($_SESSION['pseudo'], $gameResult, $_SESSION['jeu']->getShotNumber());
 
         $bd->store($statsG); // que l'on enregistre dans la base de données

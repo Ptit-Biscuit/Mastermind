@@ -22,7 +22,7 @@ class Routeur {
      * Le constructeur de Routeur
      */
     public function __construct() {
-        if(empty($_SESSION)) session_start(); // si le joueur vient d'arriver on créer une session
+        if(empty($_SESSION)) session_start(); // si le joueur vient d'arriver on crée une session
         $this->routeRequest(); // et on route sa requête au bon endroit
     }
 
@@ -52,7 +52,7 @@ class Routeur {
      * @param $password String Le mot de passe du joueur
      */
     public function authentification($pseudo, $password) {
-        $bd = new Bd(); // on créer une nouvelle connexion à la base de données
+        $bd = new Bd(); // on crée une nouvelle connexion à la base de données
 
         // si le joueur est bien enregistré dans la base de données
         if($bd->isPlayerRegistered($pseudo, $password)) {
