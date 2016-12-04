@@ -130,7 +130,7 @@ class VJeu {
         <!DOCTYPE html>
         <html lang="fr">
             <script type="text/javascript">
-                function warning() { alert("Vous devez absolument valider avant de continuer"); }
+                function warning() { alert("Vous devez absolument valider ou effacer avant de continuer"); }
             </script>
 
             <body onload="warning()"></body>
