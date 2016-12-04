@@ -7,9 +7,19 @@
 namespace modele;
 
 class StatistiqueG {
-
+    /**
+     * @var String Le pseudo du joueur
+     */
     private $pseudo;
+
+    /**
+     * @var int 1 si la partie est gagnée, 0 sinon
+     */
     private $partieGagnee;
+
+    /**
+     * @var int Le nombre de coups joués
+     */
     private $nombreCoups;
 
     /**
