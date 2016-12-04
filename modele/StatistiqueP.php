@@ -21,6 +21,9 @@ class StatistiqueP {
 	 * @param $nbCoupsPourGagner double nombre moyens de coups nécessaires pour gagner
 	 */
 	public function __construct($pseudo, $nbParties, $nbPartiesGagnees, $nbCoupsPourGagner) {
+	    // les statistiuques pour un joueur se composent de son pseudo, son nombre de parties jouées,
+        // son nombre de parties gagnées et son nombre de coups pour gagner
+
 		$this->pseudo = $pseudo;
 		$this->nbParties = $nbParties;
 		$this->nbPartiesGagnees = $nbPartiesGagnees;

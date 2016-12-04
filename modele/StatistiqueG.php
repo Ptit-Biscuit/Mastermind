@@ -19,6 +19,9 @@ class StatistiqueG {
      * @param $nombreCoups int nombre de coups joués lors de cette partie
      */
     public function __construct($pseudo, $partieGagnee, $nombreCoups) {
+        // les statistiques pour une partie se composent du pseudo du joueur, du résultat de la partie
+        // (victoire ou non) et du nnombre de coups joués
+
         $this->pseudo = $pseudo;
         $this->partieGagnee = $partieGagnee;
         $this->nombreCoups = $nombreCoups;

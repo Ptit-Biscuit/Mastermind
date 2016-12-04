@@ -47,14 +47,15 @@ class Jeu {
      * Le constructeur de Jeu
      */
     public function __construct() {
+        // si l'utilisateur n'est pas connecté on affiche la page d'erreur
         if(!isset($_SESSION['userLogged'])) Erreur::displayUnauth();
         else {
-            $this->board = new Plateau();
-            $this->shotNumber = 0;
-            $this->idNextCase = 0;
-            $this->maxShotNb = 9;
-            $this->finished = false;
-            $this->victory = false;
+            $this->board = new Plateau(); // sinon on instancie le plateau
+            $this->shotNumber = 0; // le nombre de coups joués en début de partie est nul
+            $this->idNextCase = 0; // la prochaine case à colorer est la toute première du plateau
+            $this->maxShotNb = 9; // le nombre de coups maximum est de 10 (de 0 à 9)
+            $this->finished = false; // la partie n'est pas finie (elle vient de commencer)
+            $this->victory = false; // la partie n'est pas gagnée (elle vient de commencer)
         }
     }
 
@@ -64,13 +65,16 @@ class Jeu {
      * @return bool True si la rangée n'est pas pleine, false sinon
      */
     public function updateBoard($color) {
-        if($this->idNextCase < 4) {
-            $this->board->getTries()[$this->shotNumber]->setCase($this->idNextCase, $color);
-            $this->idNextCase++;
-            return true;
-        }
+        if($this->idNextCase < 4) { // si la rangée en cours n'est pas complète
 
-        return false;
+            // on affiche la couleur passée en paramètre sur la prochaine case à colorer
+            $this->board->getTries()[$this->shotNumber]->setCase($this->idNextCase, $color);
+
+            $this->idNextCase++; // on incrémente la prochaine case à colorer
+
+            return true; // on retourne vrai car la rangée n'était pas finie
+        }
+        return false; // on retourne faux car la rangée est finie
     }
 
     /**
@@ -138,13 +142,14 @@ class Jeu {
      * Méthode qui efface la ligne en cours
      */
     public function eraseLine() {
-        $line = $this->board->getTries()[$this->shotNumber];
-        $lineCases = $line->getVerif();
+        $line = $this->board->getTries()[$this->shotNumber]; // on récupère la rangée en cours
+        $lineCases = $line->getVerif(); // ainsi que ses cases de vérification
 
         if(!in_array("black", $lineCases) or !in_array("white", $lineCases)) { // si la ligne n'a pas été validée
             $reset = array("lightgrey", "lightgrey", "lightgrey", "lightgrey");
+
             $line->setCases($reset); // on remet la couleur des cases à grise
-            $this->idNextCase = 0;
+            $this->idNextCase = 0; // la prochaine case à être colorée est la première de la rangée en cours
         }
     }
 

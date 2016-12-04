@@ -21,7 +21,10 @@ class Rangee {
      * Le constructeur de Rangee
      */
     public function __construct() {
+        // une rangée est composée de cases que le joueur modifie
         $this->cases = array("lightgrey", "lightgrey", "lightgrey", "lightgrey");
+
+        // et de cases pou les vérifications (le joueur ne peut les modifier)
         $this->verif = array("lightgrey", "lightgrey", "lightgrey", "lightgrey");
     }
 
@@ -33,9 +36,10 @@ class Rangee {
     public function initSoluce($colors) {
         $soluceCases = array();
 
+        // on ajoute dans un tableau 4 couleurs tirées au hasard parmi le tableau passé en paramètre
         for($i = 0; $i < 4; $i++) array_push($soluceCases, $colors[rand(0, 7)]);
 
-        $this->setCases($soluceCases);
+        $this->setCases($soluceCases); // on set les cases (de la solution) avec ce tableau
     }
 
     /**

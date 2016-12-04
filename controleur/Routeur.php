@@ -22,26 +22,26 @@ class Routeur {
      * Le constructeur de Routeur
      */
     public function __construct() {
-        if(empty($_SESSION)) session_start();
-        $this->routeRequest();
+        if(empty($_SESSION)) session_start(); // si le joueur vient d'arriver on créer une session
+        $this->routeRequest(); // et on route sa requête au bon endroit
     }
 
     /**
      * Méthode routant toutes les requêtes entrantes de la page index.php
      */
     public function routeRequest() {
-        if(!isset($_SESSION['userLogged'])) { // si pas enregistré
-            if(isset($_POST['pseudo']) && isset($_POST['password'])) // si le pseudo et mdp dispo
-                $this->authentification($_POST['pseudo'], $_POST['password']); // authentification
-            else Login::displayLogin(); // sinon afficher page de log
+        if(!isset($_SESSION['userLogged'])) { // si le joueur n'est pas enregistré
+            if(isset($_POST['pseudo']) && isset($_POST['password'])) // si le pseudo et mdp sont dsponibles
+                $this->authentification($_POST['pseudo'], $_POST['password']); // on authentifie le joueur
+            else Login::displayLogin(); // sinon on affiche la page de login
         }
         else {
-            if(isset($_POST['validate'])) CJeu::validate(); // si on veut valider notre coup
-            else if(isset($_POST['erase'])) CJeu::eraseLine(); // si on veut effacer notre ligne
-            else if(isset($_POST['retry'])) CJeu::startGame(); // si on veut recommencer le jeu
-            else if(isset($_POST['quit'])) CJeu::genStats(); // si on veut quitter le jeu
-            else if(isset($_POST['disconnect'])) CJeu::disconnect(); // si on veut se déconnecter du jeu
-            else CJeu::contGame(); // sinon on continue le jeu
+            if(isset($_POST['validate'])) CJeu::validate(); // si le joueur veut valider son coup
+            else if(isset($_POST['erase'])) CJeu::eraseLine(); // si le joueur veut effacer sa ligne
+            else if(isset($_POST['retry'])) CJeu::startGame(); // si le joueur veut recommencer une partie
+            else if(isset($_POST['quit'])) CJeu::genStats(); // si le joueur veut quitter la partie
+            else if(isset($_POST['disconnect'])) CJeu::disconnect(); // si le joueur veut se déconnecter du jeu
+            else CJeu::contGame(); // sinon on continue la partie
         }
     }
 
@@ -52,15 +52,17 @@ class Routeur {
      * @param $password String Le mot de passe du joueur
      */
     public function authentification($pseudo, $password) {
-        $bd = new Bd();
+        $bd = new Bd(); // on créer une nouvelle connexion à la base de données
 
+        // si le joueur est bien enregistré dans la base de données
         if($bd->isPlayerRegistered($pseudo, $password)) {
-            $bd->disconnect();
-            $_SESSION['userLogged'] = true;
-            $_SESSION['pseudo'] = $pseudo;
+            $bd->disconnect(); // on se déconnecte de la base de données (plus sur)
 
-            CJeu::startGame();
+            $_SESSION['userLogged'] = true; // on ajoute dans la session que le joueur est bien connecté
+            $_SESSION['pseudo'] = $pseudo; // et on enregistre par la même son pseudo dans la session
+
+            CJeu::startGame(); // on commence une nouvelle partie
         }
-        else Erreur::displayAuthFail();
+        else Erreur::displayAuthFail(); // le joueur s'est mal authentifié on affiche la page d'erreur
     }
 }

@@ -20,11 +20,8 @@ class Bd {
      */
     public function __construct() {
         try {
-            /*$chaine="mysql:host=localhost;dbname=E155939Z";
-            $this->connexion = new PDO($chaine,"E155939Z","E155939Z");*/
-
-            $chaine="mysql:host=localhost;dbname=sys";
-            $this->connexion = new PDO($chaine,"root","");
+            $chaine="mysql:host=localhost;dbname=E155939Z";
+            $this->connexion = new PDO($chaine,"E155939Z","E155939Z"); // connexion à la base de données
             $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw $e;
@@ -40,13 +37,19 @@ class Bd {
      */
     public function isPlayerRegistered($id, $password) {
         try {
-            $stmt = $this->connexion->prepare("SELECT motDePasse FROM joueurs WHERE pseudo=?;");
-            $stmt->bindParam(1, $id);
-            $stmt->execute();
+            // on prépare la requête pour récupérer de la base de données
+            // le mot de passe du joueur dont le pseudo est passé en paramètre
+            $stmt = $this->connexion->prepare("SELECT motDePasse FROM joueurs WHERE pseudo = ?;");
 
-            $result = $stmt->fetch();
+            $stmt->bindParam(1, $id); // on associe le '?' au pseudo passé en paramètre
 
-            if (empty($result)) return false;
+            $stmt->execute(); // on exécute la requête
+
+            $result = $stmt->fetch(); // on récupère le résultat
+
+            if (empty($result)) return false; // si le résultat est nul on retourne faux
+
+            // sinon on retourne vrai si le cryptage du mot de passe et du résultat est égal au résultat
             return crypt($password, $result[0]) == $result[0];
         } catch (PDOException $e) {
             $this->disconnect();
@@ -60,16 +63,18 @@ class Bd {
      */
     public function store($lastGameStats) {
         try {
+            // on prépare la requête pour l'insertion des statistiques sur la partie dans la base de données
             $stmt = $this->connexion->prepare("INSERT INTO parties(pseudo, partieGagnee, nombreCoups) VALUES(?, ?, ?);");
 
-            $pseudo = $lastGameStats->getPseudo();
+            $pseudo = $lastGameStats->getPseudo(); // on stock dans des variables les informations à enregistrées
             $resultGame = $lastGameStats->getPartieGagnee();
             $shotNumber = $lastGameStats->getNombreCoups();
 
-            $stmt->bindParam(1, $pseudo);
+            $stmt->bindParam(1, $pseudo); // on associe chaque '?' à une variable ci-dessus
             $stmt->bindParam(2, $resultGame);
             $stmt->bindParam(3, $shotNumber);
-            $stmt->execute();
+
+            $stmt->execute(); // on exécute la requête
         } catch (PDOException $e) {
             $this->disconnect();
             throw new PDOException("BD::store() : problème vis-à-vis de la base de données");
@@ -83,16 +88,23 @@ class Bd {
      */
     public function getPlayerStats($pseudo) {
         try {
+            // on récupère de la base de données toutes les informations que l'on possède sur le joueur
+            // dont le pseudo est passé en paramètre
+            // c-a-d le nombre de parties jouées, nombre de parties gagnées et nombre de coups pour gagner
             $stmt = $this->connexion->prepare("SELECT p.pseudo, COUNT(*) AS nbParties, 
                 (SELECT COUNT(*) FROM parties pp WHERE pp.partieGagnee = TRUE AND pp.pseudo = ?) AS nbPartiesGagnees, 
                 (SELECT AVG(ppp.nombreCoups) FROM parties ppp WHERE ppp.partieGagnee = TRUE AND ppp.pseudo = ?) AS nbCoupsPourGagner 
                 FROM parties p WHERE p.pseudo = ?;");
-            $stmt->bindParam(1, $pseudo);
+
+            $stmt->bindParam(1, $pseudo); // on associe chaque '?' de la requête avec le pseudo en paramètre
             $stmt->bindParam(2, $pseudo);
             $stmt->bindParam(3, $pseudo);
-            $stmt->execute();
-            $t = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            $stmt->execute(); // on exécute la requête
+
+            $t = $stmt->fetch(PDO::FETCH_ASSOC); // on récupère le résultat de la requête
+
+            // on retourne les statistiques créées à partir du résultat
             return new StatistiqueP($t['pseudo'], $t['nbParties'], $t['nbPartiesGagnees'], $t['nbCoupsPourGagner']);
         } catch (PDOException $e) {
             $this->disconnect();
@@ -107,15 +119,20 @@ class Bd {
     public function getPlayersStats() {
         try {
             $result = array();
+
+            // on récupère de la base de données toutes les informations que l'on possède pour tous les joueurs
+            // c-a-d le nombre de parties jouées, nombre de parties gagnées, et nombre de coups pour gagner
             $stmt = $this->connexion->query("SELECT p.pseudo, COUNT(*) AS nbParties,
               (SELECT COUNT(*) FROM parties pp WHERE pp.partieGagnee = TRUE) AS nbPartiesGagnees,
               (SELECT AVG(ppp.nombreCoups) FROM parties ppp WHERE ppp.partieGagnee = TRUE) AS nbCoupsPourGagner
               FROM parties p GROUP BY p.pseudo;");
 
+            // la requête ci-dessus renvoie les informations nécessaires triées par pseudo
+            // on ajoute donc dans un tableau les statistiques créées avec ces informations
             while ($t = $stmt->fetch())
                 array_push($result, new StatistiqueP($t['pseudo'], $t['nbParties'], $t['nbPartiesGagnees'], $t['nbCoupsPourGagner']));
 
-            return $result;
+            return $result; // on retourne le tableau résultant de l'opération
         } catch (PDOException $e) {
             $this->disconnect();
             throw new PDOException("BD::getPlayersStats() : problème vis-à-vis de la base de données");
@@ -130,7 +147,7 @@ class Bd {
      */
     public function getTopFive() {
         /*
-         * à titre d'explication et de clarté, en langage naturel
+         * à titre d'explication et pour plus de clarté, en langage naturel
          *      1) on récupère le taux de victoire moyen et le nombre de coups néessaires moyens pour gagner
          *      2) on attribue à chaque joueur un indicateur où
          *         indicateur = ((nbPartiesGagnees/nbParties) - tauxDeVictoireMoyen) + (moyNbCoupsPourGagner/10 - nbCoupsPourGagner/10)
@@ -138,22 +155,24 @@ class Bd {
          *      4) on renvoie les statistiques de ces 5 joueurs, triés par ordre croissant de l'indice calculé
          *
          * situation d'exemple :
-         *      le boss : 0,75 taux de victoire (75 victoires sur 100 parties), 0,1 (1 coup pour gagner)
-         *      moyenne : 0,5 taux de victoire, et 0,7
-         *      le noob : 0,2 taux de victoire, et 1,0 (toujours en 10 coups)
+         *      les meilleurs : 0,75 taux de victoire (75 victoires sur 100 parties), 0,1 (1 coup pour gagner)
+         *      les moyens : 0,5 taux de victoire, et 0,7
+         *      les nuls : 0,2 taux de victoire, et 1,0 (toujours en 10 coups)
          * par le calcul énoncé ci-dessus, on obtient les indicateurs suivants :
-         *      le boss : 0,85
-         *      moyenne : 0
-         *      le noob : -0,6
+         *      les meilleurs : 0,85
+         *      les moyens : 0
+         *      les nuls : -0,6
          */
 
         try {
+            // récupération du taux de victoire et du nombre de coups moyens pour gagner avec la base de données
             $stmt = $this->connexion->query("SELECT ((SELECT COUNT(*) FROM parties p 
               WHERE p.partieGagnee = TRUE)/(SELECT COUNT(*) FROM parties)) AS tauxDeVictoireMoyen,
               (SELECT AVG(pp.nombreCoups) FROM parties pp) AS moyNbCoupsPourGagner;");
 
-            $t = $stmt->fetch();
-            $tauxDeVictoireMoyen = $t['tauxDeVictoireMoyen'];
+            $t = $stmt->fetch(); // on récupère le résultat
+
+            $tauxDeVictoireMoyen = $t['tauxDeVictoireMoyen']; // on stock les informations résultantes dans des variables
             $moyNbCoupsPourGagner = $t['moyNbCoupsPourGagner'];
 
             // on construit un tableau de classement
@@ -164,7 +183,7 @@ class Bd {
 
             foreach ($players as $p) {
                 $tab = array($p->getPseudo(), (($p->getNbPartiesGagnees() / $p->getNbParties()) - $tauxDeVictoireMoyen) + ($moyNbCoupsPourGagner / 10 - $p->getNbCoupsPourGagner() / 10));
-                array_push($classement, $tab);
+                array_push($classement, $tab); // on ajoute les stats des joueurs dans le classement
             }
 
             rsort($classement, SORT_NUMERIC); // que l'on trie en fonction des indicateurs
@@ -173,11 +192,12 @@ class Bd {
             // puis on récupère les stats complètes des 5 meilleurs, que l'on retourne
             $top = array();
 
-            for ($i = 0; $i < count($classement); $i++) {
-                if($classement[$i][0] != "") $top[$i] = $this->getPlayerStats($classement[$i][0]);
+            for ($i = 0; $i < count($classement); $i++) { // pour chaque joueur parmi les cinq meilleurs du classement
+                if($classement[$i][0] != "") // si le pseudo n'est pas nul on les ajoute on tableau du top cinq
+                    $top[$i] = $this->getPlayerStats($classement[$i][0]);
             }
 
-            return $top;
+            return $top; // on retourne les tableau avec le top cinq des meilleurs joueurs (pseudos non nuls)
         } catch (PDOException $e) {
             $this->disconnect();
             throw new PDOException("BD::getTopFive() : problème vis-à-vis de la base de données");
@@ -188,6 +208,6 @@ class Bd {
      * Méthode qui permet de fermer la connexion à la base de données
      */
     public function disconnect() {
-        $this->connexion = null;
+        $this->connexion = null; // on détruit la connexion avec la base de données
     }
 }

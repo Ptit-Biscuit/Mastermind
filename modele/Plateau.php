@@ -23,8 +23,12 @@ class Plateau {
      * Constructeur
      */
     public function __construct() {
-    	for($i = 0; $i < 10; $i++) $this->essais[] = new Rangee();
-        $this->soluce = new Rangee();
+    	for($i = 0; $i < 10; $i++) $this->essais[] = new Rangee(); // le plateau est composé de 10 rangées
+
+
+        $this->soluce = new Rangee(); // la solution du plateau est aussi une rangée
+
+        // les couleurs pour la solution sont choisies au hasard parmi le tableau passé en paramètre
         $this->soluce->initSoluce(array("white", "yellow", "orange", "red", "fuchsia", "purple", "green", "blue"));
     }
 
