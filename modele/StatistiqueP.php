@@ -7,10 +7,24 @@
 namespace modele;
 
 class StatistiqueP {
-
+    /**
+     * @var String Le pseudo du joueur
+     */
 	private $pseudo;
+
+    /**
+     * @var int Le nombre de partie jouées
+     */
 	private $nbParties;
+
+    /**
+     * @var int Le nombre de parties gagnées
+     */
 	private $nbPartiesGagnees;
+
+    /**
+     * @var float Le nombre de coups pour gagner
+     */
 	private $nbCoupsPourGagner;
 
 	/**
