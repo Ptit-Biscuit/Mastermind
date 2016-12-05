@@ -20,8 +20,8 @@ class Bd {
      */
     public function __construct() {
         try {
-            $chaine="mysql:host=localhost;dbname=dbmm";
-            $this->connexion = new PDO($chaine,"root","12345"); // connexion à la base de données
+            $chaine="mysql:host=localhost;dbname=E155939Z";
+            $this->connexion = new PDO($chaine,"E155939Z","E155939Z"); // connexion à la base de données
             $this->connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw $e;
